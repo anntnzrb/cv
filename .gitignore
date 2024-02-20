@@ -1,0 +1,6 @@
+# nix
+.devenv
+.direnv
+
+# misc
+*.pdf
