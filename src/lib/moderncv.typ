@@ -27,35 +27,17 @@
 #let job_color = rgb("#737373")
 
 #let project(
-  title: "",
-  author: [],
-  phone: "",
-  email: "",
-  github: "",
-  left_column_size: left_column_size,
-  grid_column_gutter: grid_column_gutter,
-  main_color: main_color,
-  heading_color: heading_color,
-  job_color: job_color,
-  body,
+  title: "", author: [], phone: "", email: "", github: "", left_column_size: left_column_size, grid_column_gutter: grid_column_gutter, main_color: main_color, heading_color: heading_color, job_color: job_color, body,
 ) = {
   set document(author: author, title: title)
   set page(numbering: none)
   set text(font: ("Latin Modern Sans", "Inria Sans"), lang: "en", fallback: true)
   show math.equation: set text(weight: 400)
 
-  /*
-                         * How headings are used:
-                         * - h1: section (colored, prominent, with colored rectangle, spans two columns)
-                         * - h2: role (bold)
-                         * - h3: place (italic)
-                         * - h4: generic heading (normal, colored)
-                         */
   show heading.where(level: 1): element => [
     #v(0em)
     #box(
-      inset: (right: grid_column_gutter, bottom: 0.1em),
-      rect(fill: main_color, width: left_column_size, height: 0.25em),
+      inset: (right: grid_column_gutter, bottom: 0.1em), rect(fill: main_color, width: left_column_size, height: 0.25em),
     )
     #text(element.body, fill: heading_color, weight: 400)
   ]
@@ -77,8 +59,7 @@
   set enum(numbering: (n) => text(fill: heading_color, [#n.]))
 
   grid(
-    columns: (1fr, 1fr),
-    box[
+    columns: (1fr, 1fr), box[
       // Author information.
       #text([#author], weight: 400, 2.5em)
 
@@ -86,16 +67,14 @@
 
       // Title row.
       #block(text(weight: 400, 1.5em, title, style: "italic", fill: job_color))
-    ],
-    align(right + top)[
+    ], align(right + top)[
       // Contact information
       #set block(below: 0.5em)
 
       #if github != "" {
         align(top)[
           #box(
-            height: 1em,
-            baseline: 20%,
+            height: 1em, baseline: 20%,
           )[#pad(right: 0.4em)[#image("../assets/github.svg")]]
           #link("https://github.com/" + github)[#github]
         ]
@@ -104,8 +83,7 @@
       #if phone != "" {
         align(top)[
           #box(
-            height: 1em,
-            baseline: 20%,
+            height: 1em, baseline: 20%,
           )[#pad(right: 0.4em)[#image("../assets/phone-solid.svg")]]
           #link("tel:" + phone)[#phone]
         ]
@@ -114,8 +92,7 @@
       #if email != "" {
         align(top)[
           #box(
-            height: 1em,
-            baseline: 20%,
+            height: 1em, baseline: 20%,
           )[#pad(right: 0.4em)[#image("../assets/envelope-regular.svg")]]
           #link("mailto:" + email)
         ]
@@ -129,26 +106,24 @@
   body
 }
 
-#let datebox(month: "", year: []) = box(align(center, stack(
-  dir: ttb,
-  spacing: 0.4em,
-  text(size: 1em, [#year]),
-  text(size: 0.75em, month),
-)))
+#let datebox(month: "", year: []) = box(
+  align(
+    center, stack(
+      dir: ttb, spacing: 0.4em, text(size: 1em, [#year]), text(size: 0.75em, month),
+    ),
+  ),
+)
 
-#let daterange(start: (month: "", year: []), end: (month: "", year: [])) = box(stack(
-  dir: ltr,
-  spacing: 0.75em,
-  datebox(month: start.month, year: start.year),
-  [--],
-  datebox(month: end.month, year: end.year),
-))
+#let daterange(start: (month: "", year: []), end: (month: "", year: [])) = box(
+  stack(
+    dir: ltr, spacing: 0.75em, datebox(month: start.month, year: start.year), [--], datebox(month: end.month, year: end.year),
+  ),
+)
 
-#let cvgrid(..cells) = pad(bottom: 0.8em)[#grid(
-    columns: (left_column_size, auto),
-    row-gutter: 0em,
-    column-gutter: grid_column_gutter,
-    ..cells,
+#let cvgrid(..cells) = pad(
+  bottom: 0.8em,
+)[#grid(
+    columns: (left_column_size, auto), row-gutter: 0em, column-gutter: grid_column_gutter, ..cells,
   )]
 
 #let cvcol(content) = cvgrid([], content)
@@ -162,17 +137,12 @@
 }
 
 #let cventry(
-  description,
-  start: (month: "", year: ""),
-  end: (month: "", year: ""),
-  place: "",
-  role: [],
+  description, start: (month: "", year: ""), end: (month: "", year: ""), place: "", role: [],
 ) = cvgrid(align(center, daterange(start: start, end: end)), [
   == #role
   === #xdot(place)
 ], [], description)
 
 #let cvlanguage(language: [], description: [], certificate: []) = cvgrid(
-  align(right, language),
-  [#description #h(3em) #text(style: "italic", certificate)],
+  align(right, language), [#description #h(3em) #text(style: "italic", certificate)],
 )

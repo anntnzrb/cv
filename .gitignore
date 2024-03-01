@@ -1,6 +1,7 @@
 # nix
 .devenv
 .direnv
+result*
 
 # misc
 *.pdf
