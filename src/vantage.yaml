@@ -1,0 +1,121 @@
+contacts:
+  name: Juan Antonio González Orbe
+  title: Bachelor of Science in Computer Science
+  email: anntnzrb@proton.me
+  address: "Guayaquil, Ecuador"
+  location: Ecuador
+  linkedin:
+    url: https://www.linkedin.com/in/anntnzrb
+    displayText: anntnzrb
+  github:
+    url: https://github.com/anntnzrb
+    displayText: "anntnzrb"
+
+position: Software Developer
+
+tagline: Computer Science graduate with knowledge in software development and hands-on experience with .NET, C#, Python, and system integration. Eager to contribute to software projects and grow technical skills in a collaborative environment.
+
+jobs:
+  - position: Backend Developer
+    company:
+      name: ESPOLTECH EP
+      link: "https://www.espol-tech.espol.edu.ec"
+    product:
+      name: Aliados Estratégicos
+    description:
+      - Built microservice from scratch.
+      - Adapted existing systems to provide data integration for the microservice.
+    from: "2025 May"
+    to: "present"
+    tags:
+      - .NET
+      - C#
+    location: Guayaquil, Ecuador
+  - position: Digital Transformation Collaborator
+    company:
+      name: Escuela Superior Politecnica Del Litoral (ESPOL)
+      link: "https://www.espol.edu.ec"
+    description:
+      - Implemented and administered Google Classroom and other Google tools, facilitating access to online classes and collaborative work for a low-resource school.
+      - Managed access to technological platforms, ensuring teachers and students could effectively use available tools.
+      - Created and produced tutorial videos for YouTube on account creation, use of Google Sheets, Docs, Slides and other tools, improving the educational community's technological training.
+    from: "2023 Nov"
+    to: "2024 Feb"
+    tags:
+      - Google Workspace
+    location: "Santa Lucia, Ecuador (Hybrid)"
+  - position: Web Developer
+    company:
+      name: Escuela Superior Politecnica Del Litoral (ESPOL)
+      link: "https://www.espol.edu.ec"
+    product:
+      name: SILAB Web Platform
+    description:
+      - Initiated Drupal CRM implementation for SILAB's new web page (ESPOL Laboratory).
+      - Collaborated with designers to optimize user experience (UX) and user interface (UI), improving navigation for end users and administrators.
+      - Developed and integrated new functionalities that increased the usability of the website.
+    from: "2022 Oct"
+    to: "2022 Dec"
+    tags:
+      - Drupal
+      - PHP
+      - CRM
+      - UX/UI
+    location: "Guayaquil, Ecuador"
+
+objective: Apply my knowledge in software development and grow my technical skills in a collaborative environment where I can contribute to meaningful software projects and continue learning modern development practices.
+
+education:
+  - place:
+      name: "Escuela Superior Politécnica del Litoral (ESPOL)"
+      link: "https://www.espol.edu.ec"
+    degree: "Bachelor of Science"
+    major: "Computer Science"
+    track: "ABET-Accredited | EUR-ACE Certified"
+    from: "2019"
+    to: "2025"
+    location: "Guayaquil, Ecuador"
+  - place:
+      name: "Colegio Alemán Humboldt de Guayaquil"
+      link: "https://alemanhumboldt.edu.ec"
+    degree: "Bachiller en Ciencias"
+    major: ""
+    track: "German International Baccalaureate Program"
+    from: "2003"
+    to: "2018"
+    location: "Guayaquil, Ecuador"
+
+skills:
+  - Java
+  - C/C++
+  - Python
+  - Nix
+  - Rust
+  - Haskell
+  - Go
+  - Shell Scripting
+  - ML in Python
+  - AI Prompt Engineering
+
+technologies:
+  - Linux
+  - Docker
+  - Git
+  - .NET
+  - Drupal
+  - GitHub
+
+languages:
+  - "Español (Native)"
+  - "Inglés (Advanced-C1)"
+  - "Alemán (Intermediate-B2)"
+
+references:
+  - name: "Verónica Duarte"
+    title: "Profesora FIEC - ESPOL"
+    description: "Research in intelligent technologies"
+    email: "vealduart@espol.edu.ec"
+  - name: "Enrique Peláez"
+    title: "Profesor e Investigador - ESPOL"
+    description: "IT specialist, AI and Data Mining expert"
+    email: "epelaez@espol.edu.ec"

@@ -1,0 +1,35 @@
+name: Publish
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: DeterminateSystems/determinate-nix-action@main
+    - uses: DeterminateSystems/magic-nix-cache-action@main
+    - run: nix profile add nixpkgs#typst nixpkgs#paratype-pt-sans
+    - run: ./bin/cv build
+    - uses: actions/upload-artifact@v4
+      with:
+        name: cv-pdf
+        path: out/jago-cv.pdf
+    - name: Create release
+      run: |
+        if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          # Manual trigger - create release with timestamp
+          TAG="v$(date +%Y%m%d-%H%M%S)"
+        else
+          # Tag trigger - use tag name
+          TAG="${{ github.ref_name }}"
+        fi
+        gh release create "$TAG" out/jago-cv.pdf --title "JAGO - CV" --generate-notes
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

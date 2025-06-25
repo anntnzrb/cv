@@ -1,0 +1,26 @@
+name: Format
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: DeterminateSystems/determinate-nix-action@main
+    - uses: DeterminateSystems/magic-nix-cache-action@main
+    - run: nix profile add nixpkgs#typstyle nixpkgs#shfmt
+    - run: ./bin/cv fmt
+    - run: |
+        git config user.email "action@github.com"
+        git config user.name "GitHub Action"
+        git add -A
+        git diff --staged --quiet || git commit -m "style: fmt"
+        git push

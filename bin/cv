@@ -1,0 +1,74 @@
+#!/bin/sh
+
+set -e
+
+perr() {
+  printf "%s\n" "$*" >&2
+}
+
+SRC_DIR="src"
+OUTPUT_DIR="out"
+CV_SRC="${SRC_DIR}/main.typ"
+CV_PDF="${OUTPUT_DIR}/jago-cv.pdf"
+
+ensure_output() {
+  mkdir -p "${OUTPUT_DIR}"
+}
+
+show_help() {
+  perr "Available commands:" \
+    && perr "  help       Show this help message" \
+    && perr "  build      Build CV PDF" \
+    && perr "  check      Check CV compilation without building" \
+    && perr "  fmt        Format Typst files in place" \
+    && perr "  watch      Watch for changes and auto-rebuild"
+}
+
+build_cv() {
+  ensure_output \
+    && printf "🔨 Building CV...\n" \
+    && typst compile --root . "${CV_SRC}" "${CV_PDF}" \
+    && printf "✅ CV built: %s\n" "${CV_PDF}"
+}
+
+check_cv() {
+  printf "🔍 Checking CV compilation...\n" \
+    && typst compile --root . --format pdf "${CV_SRC}" /dev/null \
+    && printf "✅ CV check passed\n"
+}
+
+fmt_cv() {
+  printf "🎨 Formatting files...\n" \
+    && shfmt -i 2 -p -bn -w "${0}" \
+    && typstyle --inplace "${CV_SRC}" templates/vantage/main.typ \
+    && printf "✅ Files formatted\n"
+}
+
+watch_cv() {
+  ensure_output \
+    && printf "👀 Watching for changes...\n" \
+    && typst watch --root . "${CV_SRC}" "${CV_PDF}"
+}
+
+case "${1:-help}" in
+help | --help | -h)
+  show_help
+  ;;
+build)
+  build_cv
+  ;;
+check)
+  check_cv
+  ;;
+fmt)
+  fmt_cv
+  ;;
+watch)
+  watch_cv
+  ;;
+*)
+  perr "Unknown command: ${1}" \
+    && perr "Run 'cv help' for available commands" \
+    && exit 1
+  ;;
+esac
