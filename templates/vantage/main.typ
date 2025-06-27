@@ -48,7 +48,7 @@
       ])
       .join(h(10pt))
   )
- ]
+]
 
 #let term(period, location) = [
   #set text(9pt)
