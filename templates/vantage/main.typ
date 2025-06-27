@@ -129,6 +129,7 @@
   v(0pt)
   findMe(links)
 
+  v(6pt)
   tagline
 
   grid(
