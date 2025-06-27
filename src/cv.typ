@@ -1,45 +1,41 @@
 #import "/templates/vantage/main.typ": vantage
 #import "sections.typ": build-experience, build-sidebar
 
-#let configuration = yaml("/src/profile.yaml")
+#let config = yaml("/src/profile.yaml")
+
+#let build-contact-link(name, contact-data, prefix: "", display-key: none) = {
+  if type(contact-data) == str {
+    (name: name, link: prefix + contact-data, display: contact-data)
+  } else if type(contact-data) == dictionary {
+    (
+      name: name,
+      link: prefix + contact-data.url,
+      display: contact-data.at(display-key, default: contact-data.url),
+    )
+  }
+}
+
+#let contact-links = (
+  build-contact-link("email", config.contacts.email, prefix: "mailto:"),
+  ..config
+    .contacts
+    .keys()
+    .filter(key => key in ("website", "github", "linkedin"))
+    .map(key => build-contact-link(
+      key,
+      config.contacts.at(key),
+      display-key: "displayText",
+    )),
+  ..if "address" in config.contacts {
+    (build-contact-link("location", config.contacts.address),)
+  } else { () },
+).filter(link => link != none)
 
 #vantage(
-  name: configuration.contacts.name,
-  position: if "position" in configuration { configuration.position } else { none },
-  links: (
-    (name: "email", link: "mailto:" + configuration.contacts.email),
-    ..if "website" in configuration.contacts {
-      (
-        (
-          name: "website",
-          link: configuration.contacts.website.url,
-          display: configuration.contacts.website.displayText,
-        ),
-      )
-    },
-    ..if "github" in configuration.contacts {
-      (
-        (
-          name: "github",
-          link: configuration.contacts.github.url,
-          display: configuration.contacts.github.displayText,
-        ),
-      )
-    },
-    ..if "linkedin" in configuration.contacts {
-      (
-        (
-          name: "linkedin",
-          link: configuration.contacts.linkedin.url,
-          display: configuration.contacts.linkedin.displayText,
-        ),
-      )
-    },
-    ..if "address" in configuration.contacts {
-      ((name: "location", link: "", display: configuration.contacts.address),)
-    },
-  ),
-  tagline: configuration.tagline,
-  build-experience(if "jobs" in configuration { configuration.jobs } else { () }),
-  build-sidebar(configuration),
+  name: config.contacts.name,
+  position: config.at("position", default: none),
+  links: contact-links,
+  tagline: config.tagline,
+  build-experience(config.at("jobs", default: ())),
+  build-sidebar(config),
 )
