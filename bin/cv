@@ -40,7 +40,7 @@ check_cv() {
 fmt_cv() {
   printf "🎨 Formatting files...\n" \
     && shfmt -i 2 -p -bn -w "${0}" \
-    && typstyle --inplace "${CV_SRC}" src/sections.typ templates/vantage/main.typ \
+    && find . -name "*.typ" -type f -exec typstyle --inplace {} + \
     && printf "✅ Files formatted\n"
 }
 
