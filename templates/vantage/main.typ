@@ -89,7 +89,7 @@
 
 #let vantage(
   name: "",
-  position: "",
+  position: none,
   links: (),
   tagline: [],
   leftSide,
@@ -124,10 +124,15 @@
   )
 
   [= #name]
-  text(12pt, weight: "medium", [#position])
-
-  v(0pt)
-  findMe(links)
+  
+  if position != none and position != "" {
+    text(12pt, weight: "medium", [#position])
+    v(0pt)
+  }
+  
+  if links.len() > 0 {
+    findMe(links)
+  }
 
   v(6pt)
   tagline
