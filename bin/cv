@@ -8,7 +8,7 @@ perr() {
 
 SRC_DIR="src"
 OUTPUT_DIR="out"
-CV_SRC="${SRC_DIR}/main.typ"
+CV_SRC="${SRC_DIR}/cv.typ"
 CV_PDF="${OUTPUT_DIR}/jago-cv.pdf"
 
 ensure_output() {
@@ -40,7 +40,7 @@ check_cv() {
 fmt_cv() {
   printf "🎨 Formatting files...\n" \
     && shfmt -i 2 -p -bn -w "${0}" \
-    && typstyle --inplace "${CV_SRC}" templates/vantage/main.typ \
+    && typstyle --inplace "${CV_SRC}" src/sections.typ templates/vantage/main.typ \
     && printf "✅ Files formatted\n"
 }
 
