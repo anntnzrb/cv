@@ -1,5 +1,5 @@
 #import "/templates/vantage/main.typ": vantage
-#import "sections.typ": build-experience, build-sidebar
+#import "sections.typ": build-experience, build-certifications, build-sidebar
 
 #let config = yaml("/src/profile.yaml")
 
@@ -36,6 +36,9 @@
   position: config.at("position", default: none),
   links: contact-links,
   tagline: config.tagline,
-  build-experience(config.at("jobs", default: ())),
+  [
+    #build-experience(config.at("jobs", default: ()))
+    #build-certifications(config.at("certifications", default: ()))
+  ],
   build-sidebar(config),
 )

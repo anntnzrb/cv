@@ -42,6 +42,32 @@
   #jobs.map(build-job-entry).join()
 ]
 
+#let format-cert-date(date-str) = {
+  let months = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+  let (year, month-num) = date-str.split("/")
+  months.at(int(month-num) - 1) + ", " + year
+}
+
+#let render-cert-entry(cert) = [
+  === ★ #cert.name \
+  #h(0.5em)_#cert.issuer #if cert.at("date", default: "") != "" [ (#format-cert-date(cert.date))]_ \
+  #h(0.5em)#cert.skills.slice(0, calc.min(cert.skills.len(), 5)).map(skill => [• #skill]).join(" ") \
+]
+
+#let build-certifications(certifications) = if certifications.len() > 0 {
+  let split-point = 5
+  let first-group = certifications.slice(0, calc.min(split-point, certifications.len()))
+  
+  [== Certifications & Diplomas
+  #first-group.map(render-cert-entry).join()]
+  
+  if certifications.len() > split-point [
+    #colbreak()
+    == Certifications & Diplomas _(continued)_
+    #certifications.slice(split-point).map(render-cert-entry).join()
+  ]
+}
+
 #let build-sidebar(config) = [
   == Objective
   #config.objective
