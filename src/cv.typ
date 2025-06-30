@@ -1,5 +1,5 @@
 #import "/templates/vantage/main.typ": vantage
-#import "sections.typ": build-experience, build-certifications, build-sidebar
+#import "sections.typ": build-certifications, build-experience, build-sidebar
 
 #let config = yaml("/src/profile.yaml")
 
