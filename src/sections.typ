@@ -101,7 +101,7 @@
 
   #optional-section(config, "references", "References", refs => refs
     .map(reference => [
-      *#reference.name - #emph[#reference.title]* \
+      *#reference.name* - #emph[#reference.title] \
       #reference.description \
       #link("mailto:" + reference.email)[#reference.email]#if (
         "phone" in reference
