@@ -10,7 +10,7 @@ SRC_DIR="src"
 OUTPUT_DIR="out"
 CV_SRC="${SRC_DIR}/cv.typ"
 
-# Load language configuration
+# load language configuration
 LANG_CONFIG="${SRC_DIR}/languages.yaml"
 DEFAULT_LANG="en"
 
@@ -52,11 +52,11 @@ build_cv() {
 }
 
 build_all_cv() {
-  printf "🔨 Building CVs for all languages in parallel...\n"
+  printf "🔨 Building CVs for all languages...\n"
   pids=""
   failed_langs=""
 
-  # Start parallel builds
+  # start builds
   for lang in ${AVAILABLE_LANGS}; do
     (
       if build_cv "${lang}"; then
@@ -68,12 +68,12 @@ build_all_cv() {
     pids="${pids} $!"
   done
 
-  # Wait for all builds to complete
+  # wait for all builds to complete
   for pid in ${pids}; do
     wait "$pid"
   done
 
-  # Check results and clean up
+  # check results and clean up
   success=true
   for lang in ${AVAILABLE_LANGS}; do
     if [ -f "/tmp/cv_build_${lang}.status" ]; then
@@ -89,7 +89,7 @@ build_all_cv() {
   done
 
   if $success; then
-    printf "✅ All CVs built successfully (parallel)\n"
+    printf "✅ All CVs built successfully\n"
   else
     printf "❌ Some CV builds failed:%s\n" "${failed_langs}"
     return 1
@@ -138,7 +138,7 @@ validate_cv() {
   printf "🔍 Validating data consistency across languages...\n"
   validation_errors=0
 
-  # Check that base profile exists
+  # check that base profile exists
   if [ ! -f "${SRC_DIR}/profile.yaml" ]; then
     printf "❌ Base profile.yaml not found\n"
     validation_errors=$((validation_errors + 1))
@@ -146,7 +146,7 @@ validate_cv() {
     printf "✅ Base profile.yaml found\n"
   fi
 
-  # Check that all language locales exist
+  # check that all language locales exist
   for lang in ${AVAILABLE_LANGS}; do
     locale_file="${SRC_DIR}/locales/${lang}.yaml"
     if [ ! -f "${locale_file}" ]; then
@@ -157,7 +157,7 @@ validate_cv() {
     fi
   done
 
-  # Check that all languages can compile
+  # check that all languages can compile
   for lang in ${AVAILABLE_LANGS}; do
     printf "🔍 Testing compilation for %s...\n" "${lang}"
     if check_cv "${lang}" >/dev/null 2>&1; then
