@@ -1,4 +1,4 @@
-#import "/templates/vantage/main.typ": styled-link, term, icon
+#import "/templates/vantage/main.typ": icon, styled-link, term
 
 #let optional-section(config, field, title, content-fn) = if (
   field in config and config.at(field, default: ()).len() > 0
@@ -32,7 +32,9 @@
   #h(0.5em) #icon("calendar") #edu.from - #edu.to \
   #h(0.5em) #icon("location") #edu.location \
   #if edu.at("major", default: "") != "" {
-    [#h(0.5em) #icon("graduation-cap") #edu.degree #locale-content.education.preposition #edu.major]
+    [#h(0.5em) #icon(
+        "graduation-cap",
+      ) #edu.degree #locale-content.education.preposition #edu.major]
   } else {
     [#h(0.5em) #icon("graduation-cap") #edu.degree]
   } \
