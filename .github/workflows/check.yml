@@ -13,4 +13,4 @@ jobs:
     - uses: actions/checkout@v4
     - uses: DeterminateSystems/determinate-nix-action@main
     - uses: DeterminateSystems/magic-nix-cache-action@main
-    - run: nix develop -c ./bin/cv check
+    - run: nix develop -c ./bin/cv check-all

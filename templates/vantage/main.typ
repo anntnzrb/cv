@@ -76,10 +76,7 @@
   leftSide,
   rightSide,
 ) = {
-  set document(
-    title: name + "'s CV",
-    author: name,
-  )
+  set document(title: name + "'s CV", author: name)
   set text(9.8pt, font: "PT Sans")
   set page(margin: (x: 1.2cm, y: 1.2cm))
 
@@ -91,9 +88,7 @@
     #line(length: 100%, stroke: 0.5pt + theme.primary)
   ])
 
-  show heading.where(
-    level: 3,
-  ): it => text(it.body)
+  show heading.where(level: 3): it => text(it.body)
 
   show heading.where(level: 4): it => text(fill: theme.primary, it.body)
 

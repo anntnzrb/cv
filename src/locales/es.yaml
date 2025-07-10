@@ -1,0 +1,48 @@
+# Spanish-specific translatable content
+
+contacts:
+  title: "Licenciatura en Ciencias de la Computación"
+
+position: "Desarrollador de Software"
+
+tagline: "Graduado en Ciencias de la Computación con conocimientos en desarrollo de software y experiencia práctica con .NET, C#, Python e integración de sistemas. Ansioso por contribuir en proyectos de software y desarrollar habilidades técnicas en un entorno colaborativo."
+
+objective: "Aplicar mis conocimientos en desarrollo de software y desarrollar mis habilidades técnicas en un entorno colaborativo donde pueda contribuir a proyectos de software significativos y continuar aprendiendo prácticas modernas de desarrollo."
+
+jobs:
+  espoltech-backend:
+    position: "Desarrollador Backend"
+    description:
+      - "Construí microservicio desde cero."
+      - "Adapté sistemas existentes para proporcionar integración de datos para el microservicio."
+      
+  espol-digital-transformation:
+    position: "Colaborador de Transformación Digital"
+    description:
+      - "Implementé y administré Google Classroom y otras herramientas de Google, facilitando el acceso a clases en línea y trabajo colaborativo para una escuela de bajos recursos."
+      - "Gestioné el acceso a plataformas tecnológicas, asegurando que profesores y estudiantes pudieran usar efectivamente las herramientas disponibles."
+      - "Creé y produje videos tutoriales para YouTube sobre creación de cuentas, uso de Google Sheets, Docs, Slides y otras herramientas, mejorando la capacitación tecnológica de la comunidad educativa."
+      
+  espol-web-developer:
+    position: "Desarrollador Web"
+    description:
+      - "Inicié la implementación de CRM Drupal para la nueva página web de SILAB (Laboratorio ESPOL)."
+      - "Colaboré con diseñadores para optimizar la experiencia del usuario (UX) y la interfaz de usuario (UI), mejorando la navegación para usuarios finales y administradores."
+      - "Desarrollé e integré nuevas funcionalidades que aumentaron la usabilidad del sitio web."
+
+education:
+  espol-cs:
+    degree: "Licenciatura en Ciencias"
+    major: "Ciencias de la Computación"
+    track: "Acreditado por ABET | Certificado EUR-ACE"
+    
+  humboldt-school:
+    degree: "Bachiller en Ciencias"
+    major: ""
+    track: "Programa de Bachillerato Internacional Alemán"
+
+languages:
+  spanish: "Español (Nativo)"
+  english: "Inglés (Avanzado-C1)"
+  german: "Alemán (Intermedio-B2)"
+

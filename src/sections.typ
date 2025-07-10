@@ -37,8 +37,8 @@
   }
 ]
 
-#let build-experience(jobs) = if jobs.len() > 0 [
-  == Experience
+#let build-experience(jobs, strings) = if jobs.len() > 0 [
+  == #strings.experience
   #jobs.map(build-job-entry).join()
 ]
 
@@ -73,7 +73,9 @@
   ) \
 ]
 
-#let build-certifications(certifications) = if certifications.len() > 0 {
+#let build-certifications(certifications, strings) = if (
+  certifications.len() > 0
+) {
   let split-point = 5
   let first-group = certifications.slice(0, calc.min(
     split-point,
@@ -81,39 +83,39 @@
   ))
 
   [
-    == Certifications & Diplomas
+    == #strings.certifications
     #first-group.map(render-cert-entry).join()]
 
   if certifications.len() > split-point [
     #colbreak()
-    == Certifications & Diplomas _(continued)_
+    == #strings.certifications_continued
     #certifications.slice(split-point).map(render-cert-entry).join()
   ]
 }
 
-#let build-sidebar(config) = [
-  == Objective
+#let build-sidebar(config, strings) = [
+  == #strings.objective
   #config.objective
 
-  == Education
+  == #strings.education
   #config.education.map(build-edu-entry).join()
 
-  #optional-section(config, "skills", "Skills/Exposure", bullet-list)
-  #optional-section(config, "technologies", "Technologies & Tools", bullet-list)
+  #optional-section(config, "skills", strings.skills, bullet-list)
+  #optional-section(config, "technologies", strings.technologies, bullet-list)
   #optional-section(
     config,
     "methodology",
-    "Methodology/Approach",
+    strings.methodology,
     methods => methods.map(method => [• #method]).join(),
   )
 
-  == Languages
+  == #strings.languages
   #config.languages.map(lang => [• #lang]).join()
 
   #optional-section(
     config,
     "achievements",
-    "Achievements/Certifications",
+    strings.achievements,
     achievements => achievements
       .map(achievement => [
         === #achievement.name \
@@ -122,7 +124,7 @@
       .join(),
   )
 
-  #optional-section(config, "references", "References", refs => refs
+  #optional-section(config, "references", strings.references, refs => refs
     .map(reference => [
       *#reference.name* - #emph[#reference.title] \
       #reference.description \

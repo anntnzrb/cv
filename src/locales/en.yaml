@@ -1,0 +1,48 @@
+# English-specific translatable content
+
+contacts:
+  title: "Bachelor of Science in Computer Science"
+
+position: "Software Developer"
+
+tagline: "Computer Science graduate with knowledge in software development and hands-on experience with .NET, C#, Python, and system integration. Eager to contribute to software projects and grow technical skills in a collaborative environment."
+
+objective: "Apply my knowledge in software development and grow my technical skills in a collaborative environment where I can contribute to meaningful software projects and continue learning modern development practices."
+
+jobs:
+  espoltech-backend:
+    position: "Backend Developer"
+    description:
+      - "Built microservice from scratch."
+      - "Adapted existing systems to provide data integration for the microservice."
+      
+  espol-digital-transformation:
+    position: "Digital Transformation Collaborator"
+    description:
+      - "Implemented and administered Google Classroom and other Google tools, facilitating access to online classes and collaborative work for a low-resource school."
+      - "Managed access to technological platforms, ensuring teachers and students could effectively use available tools."
+      - "Created and produced tutorial videos for YouTube on account creation, use of Google Sheets, Docs, Slides and other tools, improving the educational community's technological training."
+      
+  espol-web-developer:
+    position: "Web Developer"
+    description:
+      - "Initiated Drupal CRM implementation for SILAB's new web page (ESPOL Laboratory)."
+      - "Collaborated with designers to optimize user experience (UX) and user interface (UI), improving navigation for end users and administrators."
+      - "Developed and integrated new functionalities that increased the usability of the website."
+
+education:
+  espol-cs:
+    degree: "Bachelor of Science"
+    major: "Computer Science"
+    track: "ABET-Accredited | EUR-ACE Certified"
+    
+  humboldt-school:
+    degree: "Bachiller en Ciencias"
+    major: ""
+    track: "German International Baccalaureate Program"
+
+languages:
+  spanish: "Español (Native)"
+  english: "Inglés (Advanced-C1)"
+  german: "Alemán (Intermediate-B2)"
+

@@ -15,11 +15,11 @@ jobs:
     - uses: actions/checkout@v4
     - uses: DeterminateSystems/determinate-nix-action@main
     - uses: DeterminateSystems/magic-nix-cache-action@main
-    - run: nix develop -c ./bin/cv build
+    - run: nix develop -c ./bin/cv build-all
     - uses: actions/upload-artifact@v4
       with:
-        name: cv-pdf
-        path: out/jago-cv.pdf
+        name: cv-pdfs-all
+        path: out/jago-cv-*.pdf
     - name: Create release
       run: |
         if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
@@ -29,6 +29,7 @@ jobs:
           # Tag trigger - use tag name
           TAG="${{ github.ref_name }}"
         fi
-        gh release create "$TAG" out/jago-cv.pdf --title "JAGO - CV" --generate-notes
+        # Dynamic release with all available language PDFs
+        gh release create "$TAG" out/jago-cv-*.pdf --title "JAGO - CV" --generate-notes
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

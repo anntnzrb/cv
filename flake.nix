@@ -20,6 +20,7 @@
               pkgs.typst
               pkgs.typstyle
               pkgs.shfmt
+              pkgs.yq-go
             ];
           };
         };

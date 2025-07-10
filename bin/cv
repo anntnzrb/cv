@@ -9,7 +9,21 @@ perr() {
 SRC_DIR="src"
 OUTPUT_DIR="out"
 CV_SRC="${SRC_DIR}/cv.typ"
-CV_PDF="${OUTPUT_DIR}/jago-cv.pdf"
+
+# Load language configuration
+LANG_CONFIG="${SRC_DIR}/languages.yaml"
+DEFAULT_LANG="en"
+
+get_available_languages() {
+  yq eval '.languages | keys | .[]' "${LANG_CONFIG}" | tr '\n' ' ' | sed 's/ $//'
+}
+
+get_default_language() {
+  yq eval '.default' "${LANG_CONFIG}"
+}
+
+AVAILABLE_LANGS=$(get_available_languages)
+DEFAULT_LANG=$(get_default_language)
 
 ensure_output() {
   mkdir -p "${OUTPUT_DIR}"
@@ -17,24 +31,100 @@ ensure_output() {
 
 show_help() {
   perr "Available commands:" \
-    && perr "  help       Show this help message" \
-    && perr "  build      Build CV PDF" \
-    && perr "  check      Check CV compilation without building" \
-    && perr "  fmt        Format Typst files in place" \
-    && perr "  watch      Watch for changes and auto-rebuild"
+    && perr "  help             Show this help message" \
+    && perr "  build [lang]     Build CV PDF (default: ${DEFAULT_LANG}, available: ${AVAILABLE_LANGS})" \
+    && perr "  build-all        Build CV PDFs for all languages" \
+    && perr "  check [lang]     Check CV compilation without building" \
+    && perr "  check-all        Check CV compilation for all languages" \
+    && perr "  validate         Validate data consistency across languages" \
+    && perr "  fmt              Format Typst files in place" \
+    && perr "  watch [lang]     Watch for changes and auto-rebuild"
 }
 
 build_cv() {
+  lang="${1:-${DEFAULT_LANG}}"
+  output_file="${OUTPUT_DIR}/jago-cv-${lang}.pdf"
+
   ensure_output \
-    && printf "🔨 Building CV...\n" \
-    && typst compile --root . "${CV_SRC}" "${CV_PDF}" \
-    && printf "✅ CV built: %s\n" "${CV_PDF}"
+    && printf "🔨 Building CV (%s)...\n" "${lang}" \
+    && typst compile --root . --input lang="${lang}" "${CV_SRC}" "${output_file}" \
+    && printf "✅ CV built: %s\n" "${output_file}"
+}
+
+build_all_cv() {
+  printf "🔨 Building CVs for all languages in parallel...\n"
+  pids=""
+  failed_langs=""
+
+  # Start parallel builds
+  for lang in ${AVAILABLE_LANGS}; do
+    (
+      if build_cv "${lang}"; then
+        echo "SUCCESS:${lang}" >"/tmp/cv_build_${lang}.status"
+      else
+        echo "FAILED:${lang}" >"/tmp/cv_build_${lang}.status"
+      fi
+    ) &
+    pids="${pids} $!"
+  done
+
+  # Wait for all builds to complete
+  for pid in ${pids}; do
+    wait "$pid"
+  done
+
+  # Check results and clean up
+  success=true
+  for lang in ${AVAILABLE_LANGS}; do
+    if [ -f "/tmp/cv_build_${lang}.status" ]; then
+      status=$(cat "/tmp/cv_build_${lang}.status")
+      case "$status" in
+      FAILED:*)
+        failed_langs="${failed_langs} ${lang}"
+        success=false
+        ;;
+      esac
+      rm -f "/tmp/cv_build_${lang}.status"
+    fi
+  done
+
+  if $success; then
+    printf "✅ All CVs built successfully (parallel)\n"
+  else
+    printf "❌ Some CV builds failed:%s\n" "${failed_langs}"
+    return 1
+  fi
 }
 
 check_cv() {
-  printf "🔍 Checking CV compilation...\n" \
-    && typst compile --root . --format pdf "${CV_SRC}" /dev/null \
-    && printf "✅ CV check passed\n"
+  lang="${1:-${DEFAULT_LANG}}"
+
+  printf "🔍 Checking CV compilation (%s)...\n" "${lang}" \
+    && typst compile --root . --input lang="${lang}" --format pdf "${CV_SRC}" /dev/null \
+    && printf "✅ CV check passed (%s)\n" "${lang}"
+}
+
+check_all_cv() {
+  printf "🔍 Checking CV compilation for all languages...\n"
+  failed_langs=""
+  success=true
+
+  for lang in ${AVAILABLE_LANGS}; do
+    if check_cv "${lang}"; then
+      printf "✅ %s check passed\n" "${lang}"
+    else
+      printf "❌ %s check failed\n" "${lang}"
+      failed_langs="${failed_langs} ${lang}"
+      success=false
+    fi
+  done
+
+  if $success; then
+    printf "✅ All language checks passed\n"
+  else
+    printf "❌ Some language checks failed:%s\n" "${failed_langs}"
+    return 1
+  fi
 }
 
 fmt_cv() {
@@ -44,10 +134,56 @@ fmt_cv() {
     && printf "✅ Files formatted\n"
 }
 
+validate_cv() {
+  printf "🔍 Validating data consistency across languages...\n"
+  validation_errors=0
+
+  # Check that base profile exists
+  if [ ! -f "${SRC_DIR}/profile.yaml" ]; then
+    printf "❌ Base profile.yaml not found\n"
+    validation_errors=$((validation_errors + 1))
+  else
+    printf "✅ Base profile.yaml found\n"
+  fi
+
+  # Check that all language locales exist
+  for lang in ${AVAILABLE_LANGS}; do
+    locale_file="${SRC_DIR}/locales/${lang}.yaml"
+    if [ ! -f "${locale_file}" ]; then
+      printf "❌ Locale file missing: %s\n" "${locale_file}"
+      validation_errors=$((validation_errors + 1))
+    else
+      printf "✅ Locale file found: %s\n" "${locale_file}"
+    fi
+  done
+
+  # Check that all languages can compile
+  for lang in ${AVAILABLE_LANGS}; do
+    printf "🔍 Testing compilation for %s...\n" "${lang}"
+    if check_cv "${lang}" >/dev/null 2>&1; then
+      printf "✅ %s compilation successful\n" "${lang}"
+    else
+      printf "❌ %s compilation failed\n" "${lang}"
+      validation_errors=$((validation_errors + 1))
+    fi
+  done
+
+  if [ ${validation_errors} -eq 0 ]; then
+    printf "✅ All validations passed\n"
+    return 0
+  else
+    printf "❌ %d validation errors found\n" "${validation_errors}"
+    return 1
+  fi
+}
+
 watch_cv() {
+  lang="${1:-${DEFAULT_LANG}}"
+  output_file="${OUTPUT_DIR}/jago-cv-${lang}.pdf"
+
   ensure_output \
-    && printf "👀 Watching for changes...\n" \
-    && typst watch --root . "${CV_SRC}" "${CV_PDF}"
+    && printf "👀 Watching for changes (%s)...\n" "${lang}" \
+    && typst watch --root . --input lang="${lang}" "${CV_SRC}" "${output_file}"
 }
 
 case "${1:-help}" in
@@ -55,16 +191,25 @@ help | --help | -h)
   show_help
   ;;
 build)
-  build_cv
+  build_cv "${2}"
+  ;;
+build-all)
+  build_all_cv
   ;;
 check)
-  check_cv
+  check_cv "${2}"
+  ;;
+check-all)
+  check_all_cv
+  ;;
+validate)
+  validate_cv
   ;;
 fmt)
   fmt_cv
   ;;
 watch)
-  watch_cv
+  watch_cv "${2}"
   ;;
 *)
   perr "Unknown command: ${1}" \

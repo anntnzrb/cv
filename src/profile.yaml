@@ -1,6 +1,8 @@
+# Base profile with immutable facts only
+# This is the single source of truth for structural data
+
 contacts:
   name: Juan Antonio González Orbe
-  title: Bachelor of Science in Computer Science
   email: anntnzrb@proton.me
   address: "Guayaquil, Ecuador"
   location: Ecuador
@@ -11,76 +13,51 @@ contacts:
     url: https://github.com/anntnzrb
     displayText: "anntnzrb"
 
-position: Software Developer
-
-tagline: Computer Science graduate with knowledge in software development and hands-on experience with .NET, C#, Python, and system integration. Eager to contribute to software projects and grow technical skills in a collaborative environment.
-
 jobs:
-  - position: Backend Developer
+  - id: "espoltech-backend"
     company:
       name: ESPOLTECH EP
       link: "https://www.espol-tech.espol.edu.ec"
     product:
       name: Aliados Estratégicos
-    description:
-      - Built microservice from scratch.
-      - Adapted existing systems to provide data integration for the microservice.
-    from: "2025 May"
+    from: "2025-05"
     to: "present"
-    tags:
-      - .NET
-      - C#
-    location: Guayaquil, Ecuador
-  - position: Digital Transformation Collaborator
+    tags: [".NET", "C#"]
+    location: "Guayaquil, Ecuador"
+    
+  - id: "espol-digital-transformation"
     company:
-      name: Escuela Superior Politecnica Del Litoral (ESPOL)
+      name: Escuela Superior Politécnica Del Litoral (ESPOL)
       link: "https://www.espol.edu.ec"
-    description:
-      - Implemented and administered Google Classroom and other Google tools, facilitating access to online classes and collaborative work for a low-resource school.
-      - Managed access to technological platforms, ensuring teachers and students could effectively use available tools.
-      - Created and produced tutorial videos for YouTube on account creation, use of Google Sheets, Docs, Slides and other tools, improving the educational community's technological training.
-    from: "2023 Nov"
-    to: "2024 Feb"
-    tags:
-      - Google Workspace
-    location: "Santa Lucia, Ecuador (Hybrid)"
-  - position: Web Developer
+    from: "2023-11"
+    to: "2024-02"
+    tags: ["Google Workspace"]
+    location: "Santa Lucía, Ecuador (Hybrid)"
+    
+  - id: "espol-web-developer"
     company:
-      name: Escuela Superior Politecnica Del Litoral (ESPOL)
+      name: Escuela Superior Politécnica Del Litoral (ESPOL)
       link: "https://www.espol.edu.ec"
     product:
       name: SILAB Web Platform
-    description:
-      - Initiated Drupal CRM implementation for SILAB's new web page (ESPOL Laboratory).
-      - Collaborated with designers to optimize user experience (UX) and user interface (UI), improving navigation for end users and administrators.
-      - Developed and integrated new functionalities that increased the usability of the website.
-    from: "2022 Oct"
-    to: "2022 Dec"
-    tags:
-      - Drupal
-      - PHP
-      - CRM
-      - UX/UI
+    from: "2022-10"
+    to: "2022-12"
+    tags: ["Drupal", "PHP", "CRM", "UX/UI"]
     location: "Guayaquil, Ecuador"
 
-objective: Apply my knowledge in software development and grow my technical skills in a collaborative environment where I can contribute to meaningful software projects and continue learning modern development practices.
-
 education:
-  - place:
+  - id: "espol-cs"
+    place:
       name: "Escuela Superior Politécnica del Litoral (ESPOL)"
       link: "https://www.espol.edu.ec"
-    degree: "Bachelor of Science"
-    major: "Computer Science"
-    track: "ABET-Accredited | EUR-ACE Certified"
     from: "2019"
     to: "2025"
     location: "Guayaquil, Ecuador"
-  - place:
+    
+  - id: "humboldt-school"
+    place:
       name: "Colegio Alemán Humboldt de Guayaquil"
       link: "https://alemanhumboldt.edu.ec"
-    degree: "Bachiller en Ciencias"
-    major: ""
-    track: "German International Baccalaureate Program"
     from: "2003"
     to: "2018"
     location: "Guayaquil, Ecuador"
@@ -106,109 +83,101 @@ technologies:
   - GitHub
 
 languages:
-  - "Español (Native)"
-  - "Inglés (Advanced-C1)"
-  - "Alemán (Intermediate-B2)"
+  - id: "spanish"
+    level: "Native"
+  - id: "english" 
+    level: "Advanced-C1"
+  - id: "german"
+    level: "Intermediate-B2"
 
 certifications:
-  - name: "Career Essentials in GitHub Professional Certificate"
+  - id: "github-career-essentials"
+    name: "Career Essentials in GitHub Professional Certificate"
     issuer: "LinkedIn Learning"
     date: "2024/06"
-    skills:
-      - "Git"
-      - "GitHub"
-      - "Version Control"
-  - name: "Docker Foundations Professional Certificate"
+    skills: ["Git", "GitHub", "Version Control"]
+    
+  - id: "docker-foundations"
+    name: "Docker Foundations Professional Certificate"
     issuer: "Docker"
     date: "2024/06"
-    skills:
-      - "Docker"
-      - "Containerization"
-      - "DevOps"
-  - name: "R para la Investigación"
+    skills: ["Docker", "Containerization", "DevOps"]
+    
+  - id: "r-research"
+    name: "R para la Investigación"
     issuer: "Escuela Superior Politécnica del Litoral"
     date: "2024/08"
-    skills:
-      - "R"
-      - "Data Analysis"
-      - "Statistics"
-  - name: "MOOC Escritura Académica"
+    skills: ["R", "Data Analysis", "Statistics"]
+    
+  - id: "academic-writing"
+    name: "MOOC Escritura Académica"
     issuer: "Escuela Superior Politécnica del Litoral"
     date: "2024/08"
-    skills:
-      - "Academic Writing"
-      - "Research"
-  - name: "Backend con Rust: Bases de Datos, Controladores y Templates"
+    skills: ["Academic Writing", "Research"]
+    
+  - id: "rust-backend"
+    name: "Backend con Rust: Bases de Datos, Controladores y Templates"
     issuer: "Platzi"
     date: "2025/06"
-    skills:
-      - "Rust"
-      - "Backend Development"
-      - "Database Design"
-      - "Templates"
-  - name: "Introducción al Desarrollo Backend"
+    skills: ["Rust", "Backend Development", "Database Design", "Templates"]
+    
+  - id: "backend-intro"
+    name: "Introducción al Desarrollo Backend"
     issuer: "Platzi"
     date: "2025/06"
-    skills:
-      - "Backend Development"
-      - "API Design"
-      - "Server Architecture"
-  - name: "N8N"
+    skills: ["Backend Development", "API Design", "Server Architecture"]
+    
+  - id: "n8n-cert"
+    name: "N8N"
     issuer: "Platzi"
     date: "2025/06"
-    skills:
-      - "N8N"
-      - "Workflow Automation"
-      - "Integration"
-  - name: "FastAPI"
+    skills: ["N8N", "Workflow Automation", "Integration"]
+    
+  - id: "fastapi-cert"
+    name: "FastAPI"
     issuer: "Platzi"
     date: "2025/06"
-    skills:
-      - "FastAPI"
-      - "Python"
-      - "API Development"
-  - name: "Django"
+    skills: ["FastAPI", "Python", "API Development"]
+    
+  - id: "django-cert"
+    name: "Django"
     issuer: "Platzi"
     date: "2025/06"
-    skills:
-      - "Django"
-      - "Python"
-      - "Web Development"
-  - name: "Microsoft Copilot"
+    skills: ["Django", "Python", "Web Development"]
+    
+  - id: "copilot-cert"
+    name: "Microsoft Copilot"
     issuer: "Platzi"
     date: "2025/06"
-    skills:
-      - "Microsoft Copilot"
-      - "AI Tools"
-      - "Productivity"
-  - name: "Java SE: SQL y Bases de Datos"
+    skills: ["Microsoft Copilot", "AI Tools", "Productivity"]
+    
+  - id: "java-sql"
+    name: "Java SE: SQL y Bases de Datos"
     issuer: "Platzi"
     date: "2025/06"
-    skills:
-      - "Java SE"
-      - "SQL"
-      - "Database Management"
-  - name: "React.js"
+    skills: ["Java SE", "SQL", "Database Management"]
+    
+  - id: "react-cert"
+    name: "React.js"
     issuer: "Platzi"
     date: "2025/06"
-    skills:
-      - "React.js"
-      - "JavaScript"
-      - "Frontend Development"
-  - name: "Introducción a .NET con C#"
+    skills: ["React.js", "JavaScript", "Frontend Development"]
+    
+  - id: "dotnet-intro"
+    name: "Introducción a .NET con C#"
     issuer: "Platzi"
     date: "2025/06"
-    skills:
-      - ".NET"
-      - "C#"
-      - "Backend Development"
+    skills: [".NET", "C#", "Backend Development"]
 
 references:
-  - name: "Verónica Duarte"
-    title: "Profesora FIEC - ESPOL"
-    description: "Research in intelligent technologies"
+  - id: "veronica-duarte"
+    name: "Verónica Duarte"
     email: "vealduart@espol.edu.ec"
-  - name: "Enrique Peláez"
-    title: "Profesor e Investigador - ESPOL"
-    description: "IT specialist, AI and Data Mining expert"
+    title: "PhD, Data Scientist and Professor - FIEC, ESPOL"
+    description: "PhD in ICT, Master in Data Science, Expert in software development and data analysis"
+    
+  - id: "enrique-pelaez"
+    name: "Enrique Peláez"
     email: "epelaez@espol.edu.ec"
+    title: "Full Professor and IT Specialist - FIEC, ESPOL"
+    description: "PhD in Electrical & Computing Engineering, AI expert"

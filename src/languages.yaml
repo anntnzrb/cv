@@ -1,0 +1,14 @@
+# Central language configuration
+# Single source of truth for all supported languages
+
+default: en
+
+languages:
+  en:
+    name: "English"
+    flag: "🇺🇸"
+    code: "en"
+  es:
+    name: "Español" 
+    flag: "🇪🇸"
+    code: "es"
