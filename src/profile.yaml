@@ -126,14 +126,14 @@ certifications:
       - "Containerization"
       - "DevOps"
   - name: "R para la Investigación"
-    issuer: "Platzi"
+    issuer: "Escuela Superior Politécnica del Litoral"
     date: "2024/08"
     skills:
       - "R"
       - "Data Analysis"
       - "Statistics"
   - name: "MOOC Escritura Académica"
-    issuer: "Platzi"
+    issuer: "Escuela Superior Politécnica del Litoral"
     date: "2024/08"
     skills:
       - "Academic Writing"
