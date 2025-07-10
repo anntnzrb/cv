@@ -15,8 +15,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: DeterminateSystems/determinate-nix-action@main
     - uses: DeterminateSystems/magic-nix-cache-action@main
-    - run: nix profile add nixpkgs#typst
-    - run: ./bin/cv build
+    - run: nix develop -c ./bin/cv build
     - uses: actions/upload-artifact@v4
       with:
         name: cv-pdf
