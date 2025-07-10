@@ -31,6 +31,7 @@ jobs:
       - "Desarrollé e integré nuevas funcionalidades que aumentaron la usabilidad del sitio web."
 
 education:
+  preposition: "en"
   espol-cs:
     degree: "Ingeniería"
     major: "Ciencias de la Computación"

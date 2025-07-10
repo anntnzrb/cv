@@ -1,4 +1,4 @@
-#import "/templates/vantage/main.typ": styled-link, term
+#import "/templates/vantage/main.typ": styled-link, term, icon
 
 #let optional-section(config, field, title, content-fn) = if (
   field in config and config.at(field, default: ()).len() > 0
@@ -23,18 +23,19 @@
   #job.description.map(point => [- #point]).join()
 ]
 
-#let build-edu-entry(edu) = [
+#let build-edu-entry(edu, locale-content) = [
   === #if edu.place.at("link", default: "") != "" {
     link(edu.place.link)[#edu.place.name]
   } else {
     edu.place.name
   } \
-  #edu.from - #edu.to #h(1fr) #edu.location
+  #h(0.5em) #icon("calendar") #edu.from - #edu.to \
+  #h(0.5em) #icon("location") #edu.location \
   #if edu.at("major", default: "") != "" {
-    [#edu.degree in #edu.major]
+    [#h(0.5em) #icon("graduation-cap") #edu.degree #locale-content.education.preposition #edu.major]
   } else {
-    edu.degree
-  }
+    [#h(0.5em) #icon("graduation-cap") #edu.degree]
+  } \
 ]
 
 #let build-experience(jobs, strings) = if jobs.len() > 0 [
@@ -93,12 +94,12 @@
   ]
 }
 
-#let build-sidebar(config, strings) = [
+#let build-sidebar(config, strings, locale-content) = [
   == #strings.objective
   #config.objective
 
   == #strings.education
-  #config.education.map(build-edu-entry).join()
+  #config.education.map(edu => build-edu-entry(edu, locale-content)).join()
 
   #optional-section(config, "skills", strings.skills, bullet-list)
   #optional-section(config, "technologies", strings.technologies, bullet-list)

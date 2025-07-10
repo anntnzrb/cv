@@ -31,6 +31,7 @@ jobs:
       - "Developed and integrated new functionalities that increased the usability of the website."
 
 education:
+  preposition: "in"
   espol-cs:
     degree: "Bachelor of Science"
     major: "Computer Science"

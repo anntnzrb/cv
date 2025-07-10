@@ -133,5 +133,5 @@
       lang,
     ))
   ],
-  build-sidebar(config, i18n.at(lang)),
+  build-sidebar(config, i18n.at(lang), locale-content),
 )
