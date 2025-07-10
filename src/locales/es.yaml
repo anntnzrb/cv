@@ -1,19 +1,19 @@
 # Spanish-specific translatable content
 
 contacts:
-  title: "Licenciatura en Ciencias de la Computación"
+  title: "Ingeniero en Ciencias de la Computación"
 
 position: "Desarrollador de Software"
 
-tagline: "Graduado en Ciencias de la Computación con conocimientos en desarrollo de software y experiencia práctica con .NET, C#, Python e integración de sistemas. Ansioso por contribuir en proyectos de software y desarrollar habilidades técnicas en un entorno colaborativo."
+tagline: "Ingenierio en Ciencias de la Computación con conocimientos en desarrollo de software y experiencia práctica con .NET, Go, Java, Python. Disfruto de contribuir en proyectos de software y desarrollar habilidades técnicas."
 
-objective: "Aplicar mis conocimientos en desarrollo de software y desarrollar mis habilidades técnicas en un entorno colaborativo donde pueda contribuir a proyectos de software significativos y continuar aprendiendo prácticas modernas de desarrollo."
+objective: "Aplicar mis conocimientos en desarrollo de software y desarrollar mis habilidades técnicas donde pueda contribuir a proyectos significativos y continuar aprendiendo prácticas modernas de desarrollo."
 
 jobs:
   espoltech-backend:
     position: "Desarrollador Backend"
     description:
-      - "Construí microservicio desde cero."
+      - "Construí un microservicio desde cero en .NET."
       - "Adapté sistemas existentes para proporcionar integración de datos para el microservicio."
       
   espol-digital-transformation:
@@ -32,7 +32,7 @@ jobs:
 
 education:
   espol-cs:
-    degree: "Licenciatura en Ciencias"
+    degree: "Ingeniería"
     major: "Ciencias de la Computación"
     track: "Acreditado por ABET | Certificado EUR-ACE"
     

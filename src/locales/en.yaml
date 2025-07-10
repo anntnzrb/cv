@@ -5,15 +5,15 @@ contacts:
 
 position: "Software Developer"
 
-tagline: "Computer Science graduate with knowledge in software development and hands-on experience with .NET, C#, Python, and system integration. Eager to contribute to software projects and grow technical skills in a collaborative environment."
+tagline: "Computer Science graduate with knowledge in software development and hands-on experience with .NET, Go, Python. Eager to contribute to software projects and grow technical skills."
 
-objective: "Apply my knowledge in software development and grow my technical skills in a collaborative environment where I can contribute to meaningful software projects and continue learning modern development practices."
+objective: "Apply my knowledge in software development and grow my technical skills where I can contribute to meaningful projects and continue learning modern development practices."
 
 jobs:
   espoltech-backend:
     position: "Backend Developer"
     description:
-      - "Built microservice from scratch."
+      - "Built a .NET microservice from scratch."
       - "Adapted existing systems to provide data integration for the microservice."
       
   espol-digital-transformation:
