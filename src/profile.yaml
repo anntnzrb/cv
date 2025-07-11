@@ -71,7 +71,7 @@ skills:
   - Haskell
   - Go
   - Shell Scripting
-  - ML in Python
+  - ML (Python)
   - AI Prompt Engineering
 
 technologies:
@@ -173,11 +173,11 @@ references:
   - id: "veronica-duarte"
     name: "Verónica Duarte"
     email: "vealduart@espol.edu.ec"
-    title: "PhD, Data Scientist and Professor - FIEC, ESPOL"
-    description: "PhD in ICT, Master in Data Science, Expert in software development and data analysis"
+    title: "Professor and Data Scientist - FIEC, ESPOL"
+    description: "PhD in ICT, Expert in software development and data analysis"
     
   - id: "enrique-pelaez"
     name: "Enrique Peláez"
     email: "epelaez@espol.edu.ec"
-    title: "Full Professor and IT Specialist - FIEC, ESPOL"
+    title: "Professor and IT Specialist - FIEC, ESPOL"
     description: "PhD in Electrical & Computing Engineering, AI expert"
