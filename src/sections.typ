@@ -17,7 +17,7 @@
   config.at(field).map(item => [• #item]).join()
 }
 
-#let build-job-entry(job) = [
+#let build-job-entry(job, strings) = [
   === #job.position \
   #if "product" in job [
     _#link(job.company.link)[#job.company.name] - #if job.product.at("link", default: "") != "" {
@@ -26,7 +26,10 @@
   ] else [
     _#link(job.company.link)[#job.company.name]_ \
   ]
-  #term[#job.from --- #job.to][#job.location]
+  #term[#job.from --- #job.to][#job.location#if job.at(
+      "hybrid",
+      default: false,
+    ) [ (#strings.hybrid)]]
 
   #job.description.map(point => [- #point]).join()
 ]
@@ -50,7 +53,7 @@
 
 #let build-experience(jobs, strings) = if jobs.len() > 0 [
   == #strings.experience
-  #jobs.map(build-job-entry).join()
+  #jobs.map(job => build-job-entry(job, strings)).join()
 ]
 
 #let format-cert-date(date-str) = {
@@ -112,11 +115,11 @@
   #config.education.map(edu => build-edu-entry(edu, locale-content)).join()
 
   #bullet-list-section(config, "skills", strings.skills)
-  
+
   #bullet-list-section(config, "technologies", strings.technologies)
-  
+
   #bullet-list-section(config, "methodology", strings.methodology)
-  
+
   #bullet-list-section(config, "languages", strings.languages)
 
   #optional-section(
@@ -130,7 +133,7 @@
       ])
       .join(),
   )
-  
+
   #optional-section(config, "references", strings.references, refs => refs
     .map(reference => [
       *#reference.name* - #emph[#reference.title] \
@@ -139,5 +142,5 @@
         "phone" in reference
       ) [ | #reference.phone] \
     ])
-    .join())
+    .join([ \ ]))
 ]

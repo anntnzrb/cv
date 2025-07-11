@@ -10,6 +10,7 @@ en:
   languages: "Languages"
   achievements: "Achievements/Certifications"
   references: "References"
+  hybrid: "Hybrid"
 
 es:
   experience: "Experiencia"
@@ -23,3 +24,4 @@ es:
   languages: "Idiomas"
   achievements: "Logros/Certificaciones"
   references: "Referencias"
+  hybrid: "Híbrido"

@@ -32,7 +32,8 @@ jobs:
     from: "2023-11"
     to: "2024-02"
     tags: ["Google Workspace"]
-    location: "Santa Lucía, Ecuador (Hybrid)"
+    location: "Santa Lucía, Ecuador"
+    hybrid: true
     
   - id: "espol-web-developer"
     company:
