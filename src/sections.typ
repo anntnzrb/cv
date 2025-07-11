@@ -5,9 +5,17 @@
 ) {
   heading(level: 2)[#title]
   content-fn(config.at(field))
+  [ \ ]
 }
 
 #let bullet-list(items) = [• #items.join(" • ")]
+
+#let bullet-list-section(config, field, title) = if (
+  field in config and config.at(field, default: ()).len() > 0
+) {
+  heading(level: 2)[#title]
+  config.at(field).map(item => [• #item]).join()
+}
 
 #let build-job-entry(job) = [
   === #job.position \
@@ -103,17 +111,13 @@
   == #strings.education
   #config.education.map(edu => build-edu-entry(edu, locale-content)).join()
 
-  #optional-section(config, "skills", strings.skills, bullet-list)
-  #optional-section(config, "technologies", strings.technologies, bullet-list)
-  #optional-section(
-    config,
-    "methodology",
-    strings.methodology,
-    methods => methods.map(method => [• #method]).join(),
-  )
-
-  == #strings.languages
-  #config.languages.map(lang => [• #lang]).join()
+  #bullet-list-section(config, "skills", strings.skills)
+  
+  #bullet-list-section(config, "technologies", strings.technologies)
+  
+  #bullet-list-section(config, "methodology", strings.methodology)
+  
+  #bullet-list-section(config, "languages", strings.languages)
 
   #optional-section(
     config,
