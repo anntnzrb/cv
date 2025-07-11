@@ -10,12 +10,26 @@
 
 #let bullet-list(items) = [• #items.join(" • ")]
 
-#let bullet-list-section(config, field, title) = if (
+#let bullet-list-section(config, field, title, vertical: false) = if (
   field in config and config.at(field, default: ()).len() > 0
 ) {
   heading(level: 2)[#title]
-  config.at(field).map(item => [• #item]).join()
+  if vertical {
+    config.at(field).map(item => [• #item]).join([ \ ])
+  } else {
+    config
+      .at(field)
+      .chunks(4)
+      .map(row => row.map(item => [• #item]).join([ ]))
+      .join([ \ ])
+  }
 }
+
+#let content-separator() = (
+  v(-0.5em)
+    + align(center)[#line(length: 3cm, stroke: 0.5pt + gray)]
+    + v(-0.5em)
+)
 
 #let build-job-entry(job, strings) = [
   === #job.position \
@@ -31,7 +45,7 @@
       default: false,
     ) [ (#strings.hybrid)]]
 
-  #job.description.map(point => [- #point]).join()
+  #job.description.map(point => [- #par(justify: true)[#point]]).join()
 ]
 
 #let build-edu-entry(edu, locale-content) = [
@@ -45,7 +59,9 @@
   #if edu.at("major", default: "") != "" {
     [#h(0.5em) #icon(
         "graduation-cap",
-      ) #edu.degree #locale-content.education.preposition #edu.major]
+      ) #edu.degree #locale-content.education.preposition #linebreak() #h(
+        0.5em,
+      ) #h(1.6em) #edu.major]
   } else {
     [#h(0.5em) #icon("graduation-cap") #edu.degree]
   } \
@@ -53,7 +69,7 @@
 
 #let build-experience(jobs, strings) = if jobs.len() > 0 [
   == #strings.experience
-  #jobs.map(job => build-job-entry(job, strings)).join()
+  #jobs.map(job => build-job-entry(job, strings)).join(content-separator())
 ]
 
 #let format-cert-date(date-str) = {
@@ -109,10 +125,15 @@
 
 #let build-sidebar(config, strings, locale-content) = [
   == #strings.objective
-  #config.objective
+  #align(left + top)[#par(justify: true)[#config.objective]]
 
   == #strings.education
-  #config.education.map(edu => build-edu-entry(edu, locale-content)).join()
+  #(
+    config
+      .education
+      .map(edu => build-edu-entry(edu, locale-content))
+      .join(content-separator())
+  )
 
   #bullet-list-section(config, "skills", strings.skills)
 
@@ -120,7 +141,7 @@
 
   #bullet-list-section(config, "methodology", strings.methodology)
 
-  #bullet-list-section(config, "languages", strings.languages)
+  #bullet-list-section(config, "languages", strings.languages, vertical: true)
 
   #optional-section(
     config,
@@ -138,9 +159,11 @@
     .map(reference => [
       *#reference.name* - #emph[#reference.title] \
       #reference.description \
-      #link("mailto:" + reference.email)[#reference.email]#if (
+      #icon("email")#link("mailto:" + reference.email)[#raw(
+          reference.email,
+        )]#if (
         "phone" in reference
       ) [ | #reference.phone] \
     ])
-    .join([ \ ]))
+    .join(content-separator()))
 ]
