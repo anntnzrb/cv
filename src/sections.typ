@@ -130,7 +130,7 @@
       ])
       .join(),
   )
-
+  
   #optional-section(config, "references", strings.references, refs => refs
     .map(reference => [
       *#reference.name* - #emph[#reference.title] \
