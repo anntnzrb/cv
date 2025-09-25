@@ -63,6 +63,14 @@ education:
     to: "2018"
     location: "Guayaquil, Ecuador"
 
+  - id: "espol-fullstack-bootcamp"
+    place:
+      name: "Escuela Superior Politécnica del Litoral (ESPOL)"
+      link: "https://bootcamps.espol.edu.ec"
+    from: "2025"
+    to: "-"
+    location: "Guayaquil, Ecuador"
+
 skills:
   - Java
   - C/C++

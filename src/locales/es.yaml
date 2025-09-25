@@ -42,6 +42,11 @@ education:
     major: ""
     track: "Programa de Bachillerato Internacional Alemán"
 
+  espol-fullstack-bootcamp:
+    degree: "Bootcamp"
+    major: "Full Stack Developer"
+    track: "Desarrollo Web Full Stack"
+
 languages:
   spanish: "Español (Nativo)"
   english: "Inglés (Avanzado-C1)"
