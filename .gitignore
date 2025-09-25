@@ -1,3 +1,4 @@
 *.pdf
 .envrc
 .direnv
+CLAUDE.md
