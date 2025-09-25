@@ -176,6 +176,12 @@ certifications:
     date: "2025/07"
     skills: ["Artificial Intelligence", "Large Language Models", "Prompt Engineering", "Python", "Model Context Protocol", "FastMCP"]
 
+  - id: "techstars-mentor"
+    name: "Techstars Startup Weekend Guayaquil - Certificado de Mentor"
+    issuer: "I3LAB ESPOL"
+    date: "2025/09"
+    skills: ["Mentoring", "Start-up Consulting", "Coaching", "Entrepreneurship", "Startups"]
+
 references:
   - id: "veronica-duarte"
     name: "Verónica Duarte"
