@@ -170,6 +170,12 @@ certifications:
     date: "2025/06"
     skills: [".NET", "C#", "Backend Development"]
 
+  - id: "mcp"
+    name: "MCP"
+    issuer: "Platzi"
+    date: "2025/07"
+    skills: ["Artificial Intelligence", "Large Language Models", "Prompt Engineering", "Python", "Model Context Protocol", "FastMCP"]
+
 references:
   - id: "veronica-duarte"
     name: "Verónica Duarte"
