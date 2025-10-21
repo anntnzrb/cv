@@ -92,8 +92,17 @@
 }
 
 #let render-cert-entry(cert) = [
+  #let detail-parts = (
+    if cert.at("date", default: "") != "" { format-cert-date(cert.date) },
+    if "hours" in cert { str(cert.hours) + "h" },
+  ).filter(part => part != none)
+  #let detail = if detail-parts.len() > 0 {
+    "(" + detail-parts.join(", ") + ")"
+  } else {
+    ""
+  }
   === ★ #cert.name \
-  #h(0.5em)_#cert.issuer #if cert.at("date", default: "") != "" [ (#format-cert-date(cert.date))]_ \
+  #h(0.5em)_#cert.issuer#if detail != "" { " " + detail }_ \
   #h(0.5em)#(
     cert
       .skills

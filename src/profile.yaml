@@ -104,84 +104,98 @@ certifications:
     name: "Career Essentials in GitHub Professional Certificate"
     issuer: "LinkedIn Learning"
     date: "2024/06"
+    hours: 4
     skills: ["Git", "GitHub", "Version Control"]
-    
+
   - id: "docker-foundations"
     name: "Docker Foundations Professional Certificate"
     issuer: "Docker"
     date: "2024/06"
+    hours: 3
     skills: ["Docker", "Containerization", "DevOps"]
-    
+
   - id: "r-research"
     name: "R para la Investigación"
     issuer: "Escuela Superior Politécnica del Litoral"
     date: "2024/08"
+    hours: 40
     skills: ["R", "Data Analysis", "Statistics"]
-    
+
   - id: "academic-writing"
     name: "MOOC Escritura Académica"
     issuer: "Escuela Superior Politécnica del Litoral"
     date: "2024/08"
+    hours: 20
     skills: ["Academic Writing", "Research"]
-    
+
   - id: "rust-backend"
     name: "Backend con Rust: Bases de Datos, Controladores y Templates"
     issuer: "Platzi"
     date: "2025/06"
+    hours: 14
     skills: ["Rust", "Backend Development", "Database Design", "Templates"]
-    
+
   - id: "backend-intro"
     name: "Introducción al Desarrollo Backend"
     issuer: "Platzi"
     date: "2025/06"
+    hours: 14
     skills: ["Backend Development", "API Design", "Server Architecture"]
-    
+
   - id: "n8n-cert"
     name: "N8N"
     issuer: "Platzi"
     date: "2025/06"
+    hours: 9
     skills: ["N8N", "Workflow Automation", "Integration"]
-    
+
   - id: "fastapi-cert"
     name: "FastAPI"
     issuer: "Platzi"
     date: "2025/06"
+    hours: 19
     skills: ["FastAPI", "Python", "API Development"]
-    
+
   - id: "django-cert"
     name: "Django"
     issuer: "Platzi"
     date: "2025/06"
+    hours: 22
     skills: ["Django", "Python", "Web Development"]
-    
+
   - id: "copilot-cert"
     name: "Microsoft Copilot"
     issuer: "Platzi"
     date: "2025/06"
+    hours: 9
     skills: ["Microsoft Copilot", "AI Tools", "Productivity"]
-    
+
   - id: "java-sql"
     name: "Java SE: SQL y Bases de Datos"
     issuer: "Platzi"
     date: "2025/06"
+    hours: 15
     skills: ["Java SE", "SQL", "Database Management"]
-    
+
   - id: "react-cert"
     name: "React.js"
     issuer: "Platzi"
     date: "2025/06"
+    hours: 19
     skills: ["React.js", "JavaScript", "Frontend Development"]
-    
+
   - id: "dotnet-intro"
     name: "Introducción a .NET con C#"
     issuer: "Platzi"
     date: "2025/06"
+    hours: 14
     skills: [".NET", "C#", "Backend Development"]
 
   - id: "mcp"
     name: "MCP"
     issuer: "Platzi"
     date: "2025/07"
+    hours: 11
     skills: ["Artificial Intelligence", "Large Language Models", "Prompt Engineering", "Python", "Model Context Protocol", "FastMCP"]
 
   - id: "techstars-mentor"
