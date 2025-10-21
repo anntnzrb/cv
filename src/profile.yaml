@@ -205,6 +205,19 @@ certifications:
     hours: 4
     skills: ["Mentoring", "Start-up Consulting", "Coaching", "Entrepreneurship", "Startups"]
 
+  - id: "capacitate-pc-repair"
+    name: "Técnico en instalación y reparación de equipo de cómputo"
+    issuer: "Capacítate para el Empleo"
+    hours: 130
+    skills: [
+      "Instalación de Sistemas Operativos",
+      "Mantenimiento Preventivo y Correctivo",
+      "Ensamble de Computadoras",
+      "Configuración de Red",
+      "Instalación de Software",
+      "Definición de tareas rutinarias"
+    ]
+
 references:
   - id: "veronica-duarte"
     name: "Verónica Duarte"
