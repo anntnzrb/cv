@@ -2,7 +2,7 @@ name: Publish
 
 on:
   push:
-    tags: ['v*']
+    branches: ['main']
   workflow_dispatch:
 
 permissions:
@@ -22,13 +22,20 @@ jobs:
         path: out/jago-cv-*.pdf
     - name: Create release
       run: |
-        if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-          # Manual trigger - create release with timestamp
-          TAG="v$(date +%Y%m%d-%H%M%S)"
-        else
-          # Tag trigger - use tag name
-          TAG="${{ github.ref_name }}"
-        fi
+        case "${{ github.event_name }}" in
+          workflow_dispatch)
+            # Manual trigger - create release with timestamp
+            TAG="v$(date +%Y%m%d-%H%M%S)"
+            ;;
+          push)
+            # Push trigger - tag release with short commit SHA
+            TAG="v${GITHUB_SHA::7}"
+            ;;
+          *)
+            # Fallback to ref name (e.g. tag push)
+            TAG="${{ github.ref_name }}"
+            ;;
+        esac
         # Dynamic release with all available language PDFs
         gh release create "$TAG" out/jago-cv-*.pdf --title "JAGO - CV" --generate-notes
       env:
