@@ -112,10 +112,21 @@
   #certifications.map(render-cert-entry).join()
 ]
 
-#let build-sidebar(config, strings, locale-content) = [
-  == #strings.objective
-  #align(left + top)[#par(justify: true)[#config.objective]]
+#let build-references(refs, strings) = if (refs.len() > 0) {
+  let entries = refs.map(ref => [
+    *#ref.name* - #emph[#ref.title] \
+    #ref.description \
+    #icon("email")#link("mailto:" + ref.email)[#raw(ref.email)]#if (
+      "phone" in ref
+    ) [ | #ref.phone] \
+  ])
+  [
+    == #strings.references
+    #entries.join(content-separator())
+  ]
+}
 
+#let build-sidebar(config, strings, locale-content) = [
   == #strings.education
   #(
     config
@@ -143,16 +154,4 @@
       ])
       .join(),
   )
-
-  #optional-section(config, "references", strings.references, refs => refs
-    .map(reference => [
-      *#reference.name* - #emph[#reference.title] \
-      #reference.description \
-      #icon("email")#link("mailto:" + reference.email)[#raw(
-          reference.email,
-        )]#if (
-        "phone" in reference
-      ) [ | #reference.phone] \
-    ])
-    .join(content-separator()))
 ]
