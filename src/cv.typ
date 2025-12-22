@@ -1,5 +1,10 @@
 #import "/templates/vantage/main.typ": page-two, setup-styles, vantage
-#import "sections.typ": build-certifications, build-experience, build-references, build-sidebar
+#import "sections.typ": (
+  build-certifications,
+  build-experience,
+  build-references,
+  build-sidebar,
+)
 
 // Language parameter - defaults to "en" if not specified
 #let lang = sys.inputs.at("lang", default: "en")
