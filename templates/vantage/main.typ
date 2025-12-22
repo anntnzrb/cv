@@ -68,15 +68,7 @@
   #link(dest, content)
 ]
 
-#let vantage(
-  name: "",
-  position: none,
-  links: (),
-  tagline: [],
-  leftSide,
-  rightSide,
-) = {
-  set document(title: name + "'s CV", author: name)
+#let setup-styles(body) = {
   set text(9.8pt, font: "PT Sans")
   set page(margin: (x: 1.2cm, y: 1.2cm))
 
@@ -92,6 +84,19 @@
 
   show heading.where(level: 4): it => text(fill: theme.primary, it.body)
 
+  body
+}
+
+#let vantage(
+  name: "",
+  position: none,
+  links: (),
+  tagline: [],
+  leftSide,
+  rightSide,
+) = {
+  set document(title: name + "'s CV", author: name)
+
   [= #name]
 
   if position != none and position != "" {
@@ -106,6 +111,15 @@
   v(6pt)
   tagline
 
+  grid(
+    columns: (7fr, 4fr),
+    column-gutter: 2em,
+    leftSide, rightSide,
+  )
+}
+
+#let page-two(leftSide, rightSide) = {
+  pagebreak()
   grid(
     columns: (7fr, 4fr),
     column-gutter: 2em,
