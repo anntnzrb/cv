@@ -1,5 +1,5 @@
-#import "/templates/vantage/main.typ": vantage
-#import "sections.typ": build-certifications, build-experience, build-sidebar
+#import "/templates/vantage/main.typ": page-two, setup-styles, vantage
+#import "sections.typ": build-certifications, build-experience, build-references, build-sidebar
 
 // Language parameter - defaults to "en" if not specified
 #let lang = sys.inputs.at("lang", default: "en")
@@ -76,7 +76,6 @@
   position: locale-content.position,
   tagline: locale-content.tagline,
   jobs: compose-jobs(base-profile.jobs, locale-content.jobs),
-  objective: locale-content.objective,
   education: compose-education(
     base-profile.education,
     locale-content.education,
@@ -122,6 +121,8 @@
 // Set document language for proper typography
 #set text(lang: lang)
 
+#show: setup-styles
+
 #vantage(
   name: config.contacts.name,
   position: config.at("position", default: none),
@@ -129,9 +130,11 @@
   tagline: config.tagline,
   [
     #build-experience(config.at("jobs", default: ()), i18n.at(lang))
-    #build-certifications(config.at("certifications", default: ()), i18n.at(
-      lang,
-    ))
   ],
   build-sidebar(config, i18n.at(lang), locale-content),
+)
+
+#page-two(
+  build-certifications(config.at("certifications", default: ()), i18n.at(lang)),
+  build-references(config.at("references", default: ()), i18n.at(lang)),
 )
