@@ -193,6 +193,7 @@ certifications:
   - id: "capacitate-pc-repair"
     name: "Técnico en instalación y reparación de equipo de cómputo"
     issuer: "Capacítate para el Empleo"
+    date: "2025/09"
     hours: 130
 
 references:
