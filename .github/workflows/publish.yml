@@ -15,28 +15,24 @@ jobs:
     - uses: actions/checkout@v5
     - uses: DeterminateSystems/determinate-nix-action@main
     - uses: DeterminateSystems/magic-nix-cache-action@main
-    - run: nix develop -c ./bin/cv build-all
+    - run: nix build .#cv-all
     - uses: actions/upload-artifact@v6
       with:
         name: cv-pdfs-all
-        path: out/jago-cv-*.pdf
+        path: result/jago-cv-*.pdf
     - name: Create release
       run: |
         case "${{ github.event_name }}" in
           workflow_dispatch)
-            # Manual trigger - create release with timestamp
             TAG="v$(date +%Y%m%d-%H%M%S)"
             ;;
           push)
-            # Push trigger - tag release with short commit SHA
             TAG="v${GITHUB_SHA::7}"
             ;;
           *)
-            # Fallback to ref name (e.g. tag push)
             TAG="${{ github.ref_name }}"
             ;;
         esac
-        # Dynamic release with all available language PDFs
-        gh release create "$TAG" out/jago-cv-*.pdf --title "JAGO - CV" --generate-notes
+        gh release create "$TAG" result/jago-cv-*.pdf --title "JAGO - CV" --generate-notes
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

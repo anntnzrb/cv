@@ -16,7 +16,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
     - uses: DeterminateSystems/determinate-nix-action@main
     - uses: DeterminateSystems/magic-nix-cache-action@main
-    - run: nix develop -c ./bin/cv fmt
+    - run: nix fmt
     - run: |
         git config user.email "action@github.com"
         git config user.name "GitHub Action"
