@@ -196,6 +196,12 @@ certifications:
     date: "2025/09"
     hours: 130
 
+  - id: "i3week-speed-mentoring"
+    name: "Speed Mentoring - i3week"
+    issuer: "i3lab ESPOL / Universidad de Antioquia"
+    date: "2025/11"
+    hours: 3
+
 references:
   - id: "veronica-duarte"
     name: "Verónica Duarte"
