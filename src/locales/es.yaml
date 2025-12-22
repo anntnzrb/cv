@@ -16,6 +16,14 @@ jobs:
       - "Construir un microservicio desde cero en .NET con base de datos IBM DB2."
       - "Desarrollar el frontend utilizando React y Next.js."
       - "Adaptar sistemas existentes para proporcionar integración de datos para el microservicio."
+
+  i3lab-espol-active-community:
+    position: "Especialista en Soporte TI"
+    description:
+      - "Configurar sistemas, periféricos y equipos de apoyo para el proyecto ESPOL Active Community, asegurando la operatividad de los entornos de desarrollo y prueba."
+      - "Instalar y actualizar software, controladores y utilitarios para plataformas web y móvil."
+      - "Elaborar informes técnicos, manuales de usuario y documentación de soporte."
+      - "Mantener el control de versiones del código fuente y brindar soporte en pruebas antes de las actualizaciones."
       
   espol-digital-transformation:
     position: "Colaborador de Transformación Digital"

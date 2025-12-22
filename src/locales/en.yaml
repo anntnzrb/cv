@@ -16,6 +16,14 @@ jobs:
       - "Build a .NET microservice from scratch with IBM DB2 database."
       - "Develop the frontend using React and Next.js."
       - "Adapt existing systems to provide data integration for the microservice."
+
+  i3lab-espol-active-community:
+    position: "IT Support Specialist"
+    description:
+      - "Configure systems, peripherals and support equipment for the ESPOL Active Community project, ensuring operational development and testing environments."
+      - "Install and update software, drivers and system utilities for web and mobile platforms."
+      - "Develop technical reports, user manuals and support documentation."
+      - "Maintain source code version control and provide testing support before application updates."
       
   espol-digital-transformation:
     position: "Digital Transformation Collaborator"
