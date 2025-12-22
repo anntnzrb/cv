@@ -103,13 +103,6 @@
   }
   === ★ #cert.name \
   #h(0.5em)_#cert.issuer#if detail != "" { " " + detail }_ \
-  #h(0.5em)#(
-    cert
-      .skills
-      .slice(0, calc.min(cert.skills.len(), 5))
-      .map(skill => [• #skill])
-      .join(" ")
-  ) \
 ]
 
 #let build-certifications(certifications, strings) = if (
