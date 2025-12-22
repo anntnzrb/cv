@@ -8,37 +8,34 @@ This is a multilingual CV/resume generator built with Typst. It supports generat
 
 ## Development Environment
 
-Use Nix for development environment setup. Dependencies are **not** available globally and must be accessed through `nix develop`:
-
-```bash
-nix develop --inputs-from . --command <cmd>
-```
-
-The development shell includes:
-- typst (PDF compilation)
-- typstyle (code formatting)
-- shfmt (shell script formatting)
-- yq-go (YAML processing)
+Use Nix for all operations. No manual setup required.
 
 ## Common Commands
 
-All development tasks are managed through the `./bin/cv` script via `nix develop`:
-
 ```bash
-# Development workflow
-./bin/cv help                    # Show all available commands
-./bin/cv build [lang]            # Build CV PDF (default: en, available: en es)
-./bin/cv build-all               # Build CVs for all languages
-./bin/cv check [lang]            # Check compilation without building
-./bin/cv check-all               # Check compilation for all languages
-./bin/cv validate                # Validate data consistency across languages
-./bin/cv fmt                     # Format Typst and shell files
-./bin/cv watch [lang]            # Watch for changes and auto-rebuild
+# Build CVs
+nix run . -- build [lang]      # Build CV (default: en, available: en es)
+nix run . -- build-all         # Build all CVs to out/
+nix run . -- watch [lang]      # Watch for changes and auto-rebuild
 
-# Testing and validation
-./bin/cv check-all               # Run before commits to ensure all languages compile
-./bin/cv validate                # Verify data consistency across languages
+nix build .#cv-en              # Build English PDF -> result/jago-cv-en.pdf
+nix build .#cv-es              # Build Spanish PDF -> result/jago-cv-es.pdf
+nix build .#cv-all             # Build all PDFs -> result/
+
+# Formatting
+nix fmt                        # Format Typst and shell files
+
+# Validation
+nix flake check                # Run format check + build all languages
+nix run . -- validate          # Validate data consistency
+
+# Help
+nix run . -- help              # Show all available commands
 ```
+
+## Non-Nix Usage
+
+The `bin/cv` script works standalone with these dependencies:
 
 ## Architecture and File Structure
 
@@ -74,11 +71,12 @@ All factual entities (jobs, education, certifications) use unique IDs for cross-
 
 ## Quality Checks & Testing
 
-Use the built-in validation and check commands:
-- Run `./bin/cv fmt` to format all Typst files using typstyle and shell scripts using shfmt
-- `./bin/cv check-all` - Verify all languages compile successfully
-- `./bin/cv validate` - Check data consistency and file structure
-- `./bin/cv build-all` - Full build test for all languages
+Use `nix flake check` to run all checks (format + build for all languages).
+
+For manual validation:
+- `nix fmt` - Format all Typst and shell files
+- `nix run . -- validate` - Check data consistency and file structure
+- `nix build .#cv-all` - Full build test for all languages
 
 ## Output
 
