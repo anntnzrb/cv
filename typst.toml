@@ -1,0 +1,7 @@
+[package]
+name = "jago-cv"
+version = "1.0.0"
+entrypoint = "src/cv.typ"
+authors = ["anntnzrb <anntnzrb@proton.me>"]
+license = "GPL-3.0-or-later"
+description = "Multilingual CV generator with hybrid data/localization architecture."
