@@ -1,0 +1,65 @@
+name: Version
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.semver.outputs.version }}
+      version_changed: ${{ steps.semver.outputs.changed }}
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get semantic version
+      id: semver
+      uses: PaulHatch/semantic-version@v5.4.0
+      with:
+        tag_prefix: v
+        major_pattern: "(BREAKING CHANGE)"
+        minor_pattern: "(feat)"
+        version_format: "${major}.${minor}.${patch}"
+
+    - name: Update typst.toml version
+      if: steps.semver.outputs.changed == 'true'
+      run: |
+        NEW_VERSION="${{ steps.semver.outputs.version }}"
+        sed -i "s/^version = .*/version = \"$NEW_VERSION\"/" typst.toml
+        git config user.email "action@github.com"
+        git config user.name "GitHub Action"
+        git add typst.toml
+        git commit -m "chore: bump version to $NEW_VERSION [skip ci]"
+        git tag "v$NEW_VERSION"
+        git push
+        git push --tags
+
+  publish:
+    needs: bump
+    if: needs.bump.outputs.version_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        ref: v${{ needs.bump.outputs.version }}
+    - uses: DeterminateSystems/determinate-nix-action@main
+    - uses: DeterminateSystems/magic-nix-cache-action@main
+    - run: nix build .#cv-all
+    - uses: actions/upload-artifact@v6
+      with:
+        name: cv-pdfs-all
+        path: result/*.pdf
+    - name: Create release
+      run: |
+        gh release create "v${{ needs.bump.outputs.version }}" result/*.pdf \
+          --title "JAGO - CV v${{ needs.bump.outputs.version }}" \
+          --generate-notes
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
