@@ -10,6 +10,7 @@ in
     { pkgs, self', ... }:
     let
       self = inputs.self;
+      manifest = builtins.fromTOML (builtins.readFile (self + "/typst.toml"));
 
       cv = pkgs.writeShellApplication {
         name = "cv";
@@ -26,16 +27,20 @@ in
       buildCV =
         lang:
         pkgs.stdenvNoCC.mkDerivation {
-          pname = "cv-${lang}";
-          version = "1.0.0";
+          pname = "${manifest.package.name}-${lang}";
+          inherit (manifest.package) version;
           src = self;
-          nativeBuildInputs = [ pkgs.typst ];
+          nativeBuildInputs = [
+            (pkgs.typst.withPackages (p: with p; [
+              # Add Typst Universe packages here as needed
+            ]))
+          ];
           buildPhase = ''
             typst compile --root . --input lang=${lang} src/cv.typ cv-${lang}.pdf
           '';
           installPhase = ''
             mkdir -p $out
-            cp cv-${lang}.pdf $out/jago-cv-${lang}.pdf
+            cp cv-${lang}.pdf $out/${manifest.package.name}-${lang}.pdf
           '';
         };
     in
