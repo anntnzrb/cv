@@ -20,16 +20,16 @@ jobs:
   espol-digital-transformation:
     position: "Colaborador de Transformación Digital"
     description:
-      - "Implementé y administré Google Classroom y otras herramientas de Google, facilitando el acceso a clases en línea y trabajo colaborativo para una escuela de bajos recursos."
-      - "Gestioné el acceso a plataformas tecnológicas, asegurando que profesores y estudiantes pudieran usar efectivamente las herramientas disponibles."
-      - "Creé y produje videos tutoriales para YouTube sobre creación de cuentas, uso de Google Sheets, Docs, Slides y otras herramientas, mejorando la capacitación tecnológica de la comunidad educativa."
+      - "Implementar y administrar Google Classroom y otras herramientas de Google, facilitando el acceso a clases en línea y trabajo colaborativo para una escuela de bajos recursos."
+      - "Gestionar el acceso a plataformas tecnológicas, asegurando que profesores y estudiantes puedan usar efectivamente las herramientas disponibles."
+      - "Crear y producir videos tutoriales para YouTube sobre creación de cuentas, uso de Google Sheets, Docs, Slides y otras herramientas, mejorando la capacitación tecnológica de la comunidad educativa."
       
   espol-web-developer:
     position: "Desarrollador Web"
     description:
-      - "Inicié la implementación de CRM Drupal para la nueva página web de SILAB (Laboratorio ESPOL)."
-      - "Colaboré con diseñadores para optimizar la experiencia del usuario (UX) y la interfaz de usuario (UI), mejorando la navegación para usuarios finales y administradores."
-      - "Desarrollé e integré nuevas funcionalidades que aumentaron la usabilidad del sitio web."
+      - "Iniciar la implementación de CRM Drupal para la nueva página web de SILAB (Laboratorio ESPOL)."
+      - "Colaborar con diseñadores para optimizar la experiencia del usuario (UX) y la interfaz de usuario (UI), mejorando la navegación para usuarios finales y administradores."
+      - "Desarrollar e integrar nuevas funcionalidades que aumenten la usabilidad del sitio web."
 
 education:
   preposition: "en"
