@@ -107,23 +107,10 @@
 
 #let build-certifications(certifications, strings) = if (
   certifications.len() > 0
-) {
-  let split-point = 5
-  let first-group = certifications.slice(0, calc.min(
-    split-point,
-    certifications.len(),
-  ))
-
-  [
-    == #strings.certifications
-    #first-group.map(render-cert-entry).join()]
-
-  if certifications.len() > split-point [
-    #colbreak()
-    == #strings.certifications_continued
-    #certifications.slice(split-point).map(render-cert-entry).join()
-  ]
-}
+) [
+  == #strings.certifications
+  #certifications.map(render-cert-entry).join()
+]
 
 #let build-sidebar(config, strings, locale-content) = [
   == #strings.objective
