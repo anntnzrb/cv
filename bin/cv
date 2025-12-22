@@ -191,13 +191,13 @@ help | --help | -h)
   show_help
   ;;
 build)
-  build_cv "${2}"
+  build_cv "${2:-}"
   ;;
 build-all)
   build_all_cv
   ;;
 check)
-  check_cv "${2}"
+  check_cv "${2:-}"
   ;;
 check-all)
   check_all_cv
@@ -209,7 +209,7 @@ fmt)
   fmt_cv
   ;;
 watch)
-  watch_cv "${2}"
+  watch_cv "${2:-}"
   ;;
 *)
   perr "Unknown command: ${1}" \
