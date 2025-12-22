@@ -1,5 +1,5 @@
 {
-  description = "Go development environment";
+  description = "Multilingual CV/resume generator";
 
   inputs = {
     nixpkgs.url = "https://channels.nixos.org/nixos-25.05/nixexprs.tar.xz";
@@ -7,22 +7,15 @@
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
   };
 
-  outputs =
-    inputs:
+  outputs = inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = inputs.nixpkgs.lib.systems.flakeExposed;
 
-      perSystem =
-        { pkgs, ... }:
-        {
-          devShells.default = pkgs.mkShell {
-            packages = [
-              pkgs.typst
-              pkgs.typstyle
-              pkgs.shfmt
-              pkgs.yq-go
-            ];
-          };
-        };
+      imports =
+        let
+          modDir = ./nix/flake;
+        in
+        with builtins;
+        map (mod: "${modDir}/${mod}") (attrNames (readDir modDir));
     };
 }
