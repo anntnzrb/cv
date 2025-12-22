@@ -10,11 +10,12 @@ tagline: "Ingeniero en Ciencias de la Computación con experiencia en diversos l
 objective: "Aplicar mi conocimiento por la programación y las herramientas de IA donde pueda contribuir a proyectos significativos, continuar explorando nuevas tecnologías y colaborar en iniciativas de código abierto."
 
 jobs:
-  espoltech-backend:
-    position: "Desarrollador Backend"
+  espoltech-fullstack:
+    position: "Desarrollador Full Stack"
     description:
-      - "Construí un microservicio desde cero en .NET."
-      - "Adapté sistemas existentes para proporcionar integración de datos para el microservicio."
+      - "Construir un microservicio desde cero en .NET con base de datos IBM DB2."
+      - "Desarrollar el frontend utilizando React y Next.js."
+      - "Adaptar sistemas existentes para proporcionar integración de datos para el microservicio."
       
   espol-digital-transformation:
     position: "Colaborador de Transformación Digital"

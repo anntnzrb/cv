@@ -10,11 +10,12 @@ tagline: "Computer Science graduate passionate about diverse programming languag
 objective: "Apply my knowledge for programming and AI tools where I can contribute to meaningful projects, continue exploring new technologies, and collaborate on open source initiatives."
 
 jobs:
-  espoltech-backend:
-    position: "Backend Developer"
+  espoltech-fullstack:
+    position: "Full Stack Developer"
     description:
-      - "Built a .NET microservice from scratch."
-      - "Adapted existing systems to provide data integration for the microservice."
+      - "Build a .NET microservice from scratch with IBM DB2 database."
+      - "Develop the frontend using React and Next.js."
+      - "Adapt existing systems to provide data integration for the microservice."
       
   espol-digital-transformation:
     position: "Digital Transformation Collaborator"

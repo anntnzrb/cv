@@ -14,7 +14,7 @@ contacts:
     displayText: "anntnzrb"
 
 jobs:
-  - id: "espoltech-backend"
+  - id: "espoltech-fullstack"
     company:
       name: ESPOLTECH EP
       link: "https://www.espol-tech.espol.edu.ec"
@@ -22,7 +22,7 @@ jobs:
       name: Aliados Estratégicos
     from: "2025-05"
     to: "present"
-    tags: [".NET", "C#"]
+    tags: [".NET", "C#", "React", "Next.js", "IBM DB2"]
     location: "Guayaquil, Ecuador"
     
   - id: "espol-digital-transformation"
