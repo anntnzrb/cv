@@ -8,9 +8,10 @@ This is a multilingual CV/resume generator built with Typst. It supports generat
 
 ## Development Environment
 
-Use Nix for development environment setup:
+Use Nix for development environment setup. Dependencies are **not** available globally and must be accessed through `nix develop`:
+
 ```bash
-nix develop
+nix develop --inputs-from . --command <cmd>
 ```
 
 The development shell includes:
@@ -21,7 +22,7 @@ The development shell includes:
 
 ## Common Commands
 
-All development tasks are managed through the `./bin/cv` script:
+All development tasks are managed through the `./bin/cv` script via `nix develop`:
 
 ```bash
 # Development workflow
