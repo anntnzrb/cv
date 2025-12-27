@@ -1,219 +1,137 @@
-#!/bin/sh
+#!/usr/bin/env bash
+set -euo pipefail
 
-set -e
+readonly SRC_DIR="src"
+readonly OUTPUT_DIR="out"
+readonly CV_SRC="${SRC_DIR}/cv.typ"
+readonly LANG_CONFIG="${SRC_DIR}/languages.yaml"
 
-perr() {
-  printf "%s\n" "$*" >&2
+mapfile -t AVAILABLE_LANGS < <(yq eval '.languages | keys | .[]' "$LANG_CONFIG")
+DEFAULT_LANG=$(yq eval '.default' "$LANG_CONFIG")
+readonly DEFAULT_LANG
+
+die() {
+	printf '%s\n' "$*" >&2
+	exit 1
 }
 
-SRC_DIR="src"
-OUTPUT_DIR="out"
-CV_SRC="${SRC_DIR}/cv.typ"
+log() { printf '%s\n' "$*" >&2; }
 
-# load language configuration
-LANG_CONFIG="${SRC_DIR}/languages.yaml"
-DEFAULT_LANG="en"
+usage() {
+	cat >&2 <<EOF
+Usage: cv <command> [options]
 
-get_available_languages() {
-  yq eval '.languages | keys | .[]' "${LANG_CONFIG}" | tr '\n' ' ' | sed 's/ $//'
-}
+Commands:
+  build [lang]     Build CV PDF (default: ${DEFAULT_LANG})
+  build-all        Build CV PDFs for all languages
+  check [lang]     Check CV compilation without building
+  check-all        Check CV compilation for all languages
+  validate         Validate data consistency across languages
+  watch [lang]     Watch for changes and auto-rebuild
+  help             Show this help message
 
-get_default_language() {
-  yq eval '.default' "${LANG_CONFIG}"
-}
-
-AVAILABLE_LANGS=$(get_available_languages)
-DEFAULT_LANG=$(get_default_language)
-
-ensure_output() {
-  mkdir -p "${OUTPUT_DIR}"
-}
-
-show_help() {
-  perr "Available commands:" \
-    && perr "  help             Show this help message" \
-    && perr "  build [lang]     Build CV PDF (default: ${DEFAULT_LANG}, available: ${AVAILABLE_LANGS})" \
-    && perr "  build-all        Build CV PDFs for all languages" \
-    && perr "  check [lang]     Check CV compilation without building" \
-    && perr "  check-all        Check CV compilation for all languages" \
-    && perr "  validate         Validate data consistency across languages" \
-    && perr "  fmt              Format Typst files in place" \
-    && perr "  watch [lang]     Watch for changes and auto-rebuild"
+Available languages: ${AVAILABLE_LANGS[*]}
+EOF
 }
 
 build_cv() {
-  lang="${1:-${DEFAULT_LANG}}"
-  output_file="${OUTPUT_DIR}/jago-cv-${lang}.pdf"
+	local lang=${1:-$DEFAULT_LANG}
+	local output_file="${OUTPUT_DIR}/jago-cv-${lang}.pdf"
 
-  ensure_output \
-    && printf "🔨 Building CV (%s)...\n" "${lang}" \
-    && typst compile --root . --input lang="${lang}" "${CV_SRC}" "${output_file}" \
-    && printf "✅ CV built: %s\n" "${output_file}"
+	mkdir -p "$OUTPUT_DIR"
+	log "Building CV (${lang})..."
+	typst compile --root . --input lang="$lang" "$CV_SRC" "$output_file"
+	log "Built: ${output_file}"
 }
 
 build_all_cv() {
-  printf "🔨 Building CVs for all languages...\n"
-  pids=""
-  failed_langs=""
+	log "Building CVs for all languages..."
+	local pids=() failed=()
 
-  # start builds
-  for lang in ${AVAILABLE_LANGS}; do
-    (
-      if build_cv "${lang}"; then
-        echo "SUCCESS:${lang}" >"/tmp/cv_build_${lang}.status"
-      else
-        echo "FAILED:${lang}" >"/tmp/cv_build_${lang}.status"
-      fi
-    ) &
-    pids="${pids} $!"
-  done
+	for lang in "${AVAILABLE_LANGS[@]}"; do
+		build_cv "$lang" &
+		pids+=($!)
+	done
 
-  # wait for all builds to complete
-  for pid in ${pids}; do
-    wait "$pid"
-  done
+	local i=0
+	for pid in "${pids[@]}"; do
+		wait "$pid" || failed+=("${AVAILABLE_LANGS[$i]}")
+		((i++))
+	done
 
-  # check results and clean up
-  success=true
-  for lang in ${AVAILABLE_LANGS}; do
-    if [ -f "/tmp/cv_build_${lang}.status" ]; then
-      status=$(cat "/tmp/cv_build_${lang}.status")
-      case "$status" in
-      FAILED:*)
-        failed_langs="${failed_langs} ${lang}"
-        success=false
-        ;;
-      esac
-      rm -f "/tmp/cv_build_${lang}.status"
-    fi
-  done
-
-  if $success; then
-    printf "✅ All CVs built successfully\n"
-  else
-    printf "❌ Some CV builds failed:%s\n" "${failed_langs}"
-    return 1
-  fi
+	((${#failed[@]} == 0)) && log "All CVs built successfully" && return
+	die "Build failed for: ${failed[*]}"
 }
 
 check_cv() {
-  lang="${1:-${DEFAULT_LANG}}"
+	local lang=${1:-$DEFAULT_LANG}
 
-  printf "🔍 Checking CV compilation (%s)...\n" "${lang}" \
-    && typst compile --root . --input lang="${lang}" --format pdf "${CV_SRC}" /dev/null \
-    && printf "✅ CV check passed (%s)\n" "${lang}"
+	log "Checking CV compilation (${lang})..."
+	typst compile --root . --input lang="$lang" --format pdf "$CV_SRC" /dev/null
+	log "Check passed (${lang})"
 }
 
 check_all_cv() {
-  printf "🔍 Checking CV compilation for all languages...\n"
-  failed_langs=""
-  success=true
+	log "Checking CV compilation for all languages..."
+	local failed=()
 
-  for lang in ${AVAILABLE_LANGS}; do
-    if check_cv "${lang}"; then
-      printf "✅ %s check passed\n" "${lang}"
-    else
-      printf "❌ %s check failed\n" "${lang}"
-      failed_langs="${failed_langs} ${lang}"
-      success=false
-    fi
-  done
+	for lang in "${AVAILABLE_LANGS[@]}"; do
+		check_cv "$lang" && continue
+		failed+=("$lang")
+	done
 
-  if $success; then
-    printf "✅ All language checks passed\n"
-  else
-    printf "❌ Some language checks failed:%s\n" "${failed_langs}"
-    return 1
-  fi
-}
-
-fmt_cv() {
-  printf "🎨 Formatting files...\n" \
-    && shfmt -i 2 -p -bn -w "${0}" \
-    && find . -name "*.typ" -type f -exec typstyle --inplace {} + \
-    && printf "✅ Files formatted\n"
+	((${#failed[@]} == 0)) && log "All checks passed" && return
+	die "Check failed for: ${failed[*]}"
 }
 
 validate_cv() {
-  printf "🔍 Validating data consistency across languages...\n"
-  validation_errors=0
+	log "Validating data consistency..."
+	local errors=0
 
-  # check that base profile exists
-  if [ ! -f "${SRC_DIR}/profile.yaml" ]; then
-    printf "❌ Base profile.yaml not found\n"
-    validation_errors=$((validation_errors + 1))
-  else
-    printf "✅ Base profile.yaml found\n"
-  fi
+	[[ -f "${SRC_DIR}/profile.yaml" ]] || {
+		log "Missing: profile.yaml"
+		((errors++))
+	}
 
-  # check that all language locales exist
-  for lang in ${AVAILABLE_LANGS}; do
-    locale_file="${SRC_DIR}/locales/${lang}.yaml"
-    if [ ! -f "${locale_file}" ]; then
-      printf "❌ Locale file missing: %s\n" "${locale_file}"
-      validation_errors=$((validation_errors + 1))
-    else
-      printf "✅ Locale file found: %s\n" "${locale_file}"
-    fi
-  done
+	for lang in "${AVAILABLE_LANGS[@]}"; do
+		local locale_file="${SRC_DIR}/locales/${lang}.yaml"
+		[[ -f "$locale_file" ]] || {
+			log "Missing: ${locale_file}"
+			((errors++))
+		}
+	done
 
-  # check that all languages can compile
-  for lang in ${AVAILABLE_LANGS}; do
-    printf "🔍 Testing compilation for %s...\n" "${lang}"
-    if check_cv "${lang}" >/dev/null 2>&1; then
-      printf "✅ %s compilation successful\n" "${lang}"
-    else
-      printf "❌ %s compilation failed\n" "${lang}"
-      validation_errors=$((validation_errors + 1))
-    fi
-  done
+	for lang in "${AVAILABLE_LANGS[@]}"; do
+		check_cv "$lang" &>/dev/null || {
+			log "Compilation failed: ${lang}"
+			((errors++))
+		}
+	done
 
-  if [ ${validation_errors} -eq 0 ]; then
-    printf "✅ All validations passed\n"
-    return 0
-  else
-    printf "❌ %d validation errors found\n" "${validation_errors}"
-    return 1
-  fi
+	((errors == 0)) && log "Validation passed" && return
+	die "Validation failed with ${errors} error(s)"
 }
 
 watch_cv() {
-  lang="${1:-${DEFAULT_LANG}}"
-  output_file="${OUTPUT_DIR}/jago-cv-${lang}.pdf"
+	local lang=${1:-$DEFAULT_LANG}
+	local output_file="${OUTPUT_DIR}/jago-cv-${lang}.pdf"
 
-  ensure_output \
-    && printf "👀 Watching for changes (%s)...\n" "${lang}" \
-    && typst watch --root . --input lang="${lang}" "${CV_SRC}" "${output_file}"
+	mkdir -p "$OUTPUT_DIR"
+	log "Watching for changes (${lang})..."
+	typst watch --root . --input lang="$lang" "$CV_SRC" "$output_file"
 }
 
-case "${1:-help}" in
-help | --help | -h)
-  show_help
-  ;;
-build)
-  build_cv "${2:-}"
-  ;;
-build-all)
-  build_all_cv
-  ;;
-check)
-  check_cv "${2:-}"
-  ;;
-check-all)
-  check_all_cv
-  ;;
-validate)
-  validate_cv
-  ;;
-fmt)
-  fmt_cv
-  ;;
-watch)
-  watch_cv "${2:-}"
-  ;;
-*)
-  perr "Unknown command: ${1}" \
-    && perr "Run 'cv help' for available commands" \
-    && exit 1
-  ;;
-esac
+main() {
+	case ${1:-help} in
+	help | --help | -h) usage ;;
+	build) build_cv "${2:-}" ;;
+	build-all) build_all_cv ;;
+	check) check_cv "${2:-}" ;;
+	check-all) check_all_cv ;;
+	validate) validate_cv ;;
+	watch) watch_cv "${2:-}" ;;
+	*) die "Unknown command: $1. Run 'cv help' for usage." ;;
+	esac
+}
+
+main "$@"

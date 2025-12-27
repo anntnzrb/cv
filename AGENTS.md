@@ -36,6 +36,11 @@ nix run . -- help              # Show all available commands
 ## Non-Nix Usage
 
 The `bin/cv` script works standalone with these dependencies:
+- Bash 4+
+- typst
+- yq-go
+- typstyle (for formatting)
+- shfmt (for formatting)
 
 ## Architecture and File Structure
 
