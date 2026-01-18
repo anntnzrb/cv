@@ -45,7 +45,7 @@ education:
     track: "ABET-Accredited | EUR-ACE Certified"
     
   humboldt-school:
-    degree: "Bachiller en Ciencias"
+    degree: "Bachiller in Ciencias"
     major: ""
     track: "German International Baccalaureate Program"
 
@@ -55,7 +55,6 @@ education:
     track: "Full Stack Web Development"
 
 languages:
-  spanish: "Español (Native)"
-  english: "Inglés (Advanced-C1)"
-  german: "Alemán (Intermediate-B2)"
-
+  spanish: "Spanish (Native)"
+  english: "English (Advanced-C1)"
+  german: "German (Intermediate-B2)"

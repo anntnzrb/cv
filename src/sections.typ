@@ -32,6 +32,7 @@
 )
 
 #let build-job-entry(job, strings) = [
+  #let job-end = if job.to == "present" { strings.present } else { job.to }
   === #job.position \
   #if "product" in job [
     _#link(job.company.link)[#job.company.name] - #if job.product.at("link", default: "") != "" {
@@ -40,7 +41,7 @@
   ] else [
     _#link(job.company.link)[#job.company.name]_ \
   ]
-  #term[#job.from --- #job.to][#job.location#if job.at(
+  #term[#job.from --- #job-end][#job.location#if job.at(
       "hybrid",
       default: false,
     ) [ (#strings.hybrid)]]
@@ -72,28 +73,16 @@
   #jobs.map(job => build-job-entry(job, strings)).join(content-separator())
 ]
 
-#let format-cert-date(date-str) = {
-  let months = (
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  )
+#let format-cert-date(date-str, months) = {
   let (year, month-num) = date-str.split("/")
   months.at(int(month-num) - 1) + ", " + year
 }
 
-#let render-cert-entry(cert) = [
+#let render-cert-entry(cert, strings) = [
   #let detail-parts = (
-    if cert.at("date", default: "") != "" { format-cert-date(cert.date) },
+    if cert.at("date", default: "") != "" {
+      format-cert-date(cert.date, strings.months)
+    },
     if "hours" in cert { str(cert.hours) + "h" },
   ).filter(part => part != none)
   #let detail = if detail-parts.len() > 0 {
@@ -109,7 +98,7 @@
   certifications.len() > 0
 ) [
   == #strings.certifications
-  #certifications.map(render-cert-entry).join()
+  #certifications.map(cert => render-cert-entry(cert, strings)).join()
 ]
 
 #let build-references(refs, strings) = if (refs.len() > 0) {
