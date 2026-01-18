@@ -53,10 +53,8 @@ build_all_cv() {
 		pids+=($!)
 	done
 
-	local i=0
-	for pid in "${pids[@]}"; do
-		wait "$pid" || failed+=("${AVAILABLE_LANGS[$i]}")
-		((i++))
+	for i in "${!pids[@]}"; do
+		wait "${pids[$i]}" || failed+=("${AVAILABLE_LANGS[$i]}")
 	done
 
 	((${#failed[@]} == 0)) && log "All CVs built successfully" && return
@@ -90,21 +88,21 @@ validate_cv() {
 
 	[[ -f "${SRC_DIR}/profile.yaml" ]] || {
 		log "Missing: profile.yaml"
-		((errors++))
+		errors=$((errors + 1))
 	}
 
 	for lang in "${AVAILABLE_LANGS[@]}"; do
 		local locale_file="${SRC_DIR}/locales/${lang}.yaml"
 		[[ -f "$locale_file" ]] || {
 			log "Missing: ${locale_file}"
-			((errors++))
+			errors=$((errors + 1))
 		}
 	done
 
 	for lang in "${AVAILABLE_LANGS[@]}"; do
 		check_cv "$lang" &>/dev/null || {
 			log "Compilation failed: ${lang}"
-			((errors++))
+			errors=$((errors + 1))
 		}
 	done
 
