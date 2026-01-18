@@ -76,10 +76,10 @@ education:
 
   - id: "espol-fullstack-bootcamp"
     place:
-      name: "Escuela Superior Politécnica del Litoral (ESPOL)"
+      name: "Coding Bootcamps ESPOL"
       link: "https://bootcamps.espol.edu.ec"
     from: "2025"
-    to: "-"
+    to: "2025"
     location: "Guayaquil, Ecuador"
 
 skills:
@@ -212,6 +212,12 @@ certifications:
     issuer: "i3lab ESPOL / Universidad de Antioquia"
     date: "2025/11"
     hours: 3
+
+  - id: "espol-fullstack-developer"
+    name: "Full Stack Developer"
+    issuer: "Coding Bootcamps ESPOL"
+    date: "2026/01"
+    hours: 280
 
 references:
   - id: "veronica-duarte"
