@@ -52,7 +52,7 @@ jobs:
     - uses: DeterminateSystems/determinate-nix-action@main
     - uses: DeterminateSystems/magic-nix-cache-action@main
     - run: nix build .#cv-all
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
         name: cv-pdfs-all
         path: result/*.pdf
