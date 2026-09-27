@@ -51,6 +51,8 @@ jobs:
         ref: v${{ needs.bump.outputs.version }}
     - uses: DeterminateSystems/determinate-nix-action@main
     - uses: DeterminateSystems/magic-nix-cache-action@main
+      with:
+        use-flakehub: false
     - run: nix build .#cv-all
     - uses: actions/upload-artifact@v7
       with:
