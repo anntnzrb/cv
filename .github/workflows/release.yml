@@ -21,7 +21,7 @@ jobs:
 
     - name: Get semantic version
       id: semver
-      uses: PaulHatch/semantic-version@v6.0.2
+      uses: PaulHatch/semantic-version@v6.0.4
       with:
         tag_prefix: v
         major_pattern: "(BREAKING CHANGE)"
